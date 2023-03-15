@@ -14,5 +14,13 @@ public interface Image {
         return width() - 1;
     }
 
+    default int verticalCenter() {
+        return height() / 2;
+    }
+
+    default int horizontalCenter() {
+        return width() / 2;
+    }
+
     int getPixel(int y, int x);
 }

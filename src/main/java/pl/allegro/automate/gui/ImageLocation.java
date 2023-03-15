@@ -4,7 +4,7 @@ import org.immutables.value.Value;
 import org.immutables.value.Value.Parameter;
 
 @Value.Immutable
-public interface FindImageResult {
+public interface ImageLocation {
 
     @Parameter
     int y();

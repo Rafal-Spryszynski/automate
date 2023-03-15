@@ -14,4 +14,7 @@ public interface GuiModule {
 
     @Binds
     TakeScreenCaptureCommand bindTakeScreenCaptureCommand(TakeDeviceScreenCaptureCommand command);
+
+    @Binds
+    SendMouseClickCommand bindSendMouseClickCommand(SendDeviceMouseClickCommand command);
 }

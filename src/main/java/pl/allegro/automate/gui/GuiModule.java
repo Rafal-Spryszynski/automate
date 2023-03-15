@@ -10,5 +10,8 @@ public interface GuiModule {
     LoadImageCommand bindLoadImageCommand(LoadImageFromDiskCommand command);
 
     @Binds
+    SaveImageCommand bindSaveImageCommand(SaveImageToDiskCommand command);
+
+    @Binds
     TakeScreenCaptureCommand bindTakeScreenCaptureCommand(TakeDeviceScreenCaptureCommand command);
 }

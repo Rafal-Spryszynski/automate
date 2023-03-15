@@ -26,4 +26,8 @@ class GuiImage implements Image {
     public int getPixel(int y, int x) {
         return imageCache[y][x];
     }
+
+    BufferedImage getBufferedImage() {
+        return image;
+    }
 }

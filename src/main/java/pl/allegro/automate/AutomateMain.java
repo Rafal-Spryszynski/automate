@@ -4,7 +4,7 @@ class AutomateMain {
 
     public static void main(String[] args) throws Exception {
         Automate automate = DaggerAutomateComponent.builder()
-            .saveScreenCaptures(true)
+            .saveScreenCaptures(false)
             .build()
             .automate();
         automate.runAutomation();

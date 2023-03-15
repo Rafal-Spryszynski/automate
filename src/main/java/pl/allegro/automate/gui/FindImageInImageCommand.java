@@ -1,5 +1,6 @@
 package pl.allegro.automate.gui;
 
+import io.vavr.control.Option;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +15,11 @@ public class FindImageInImageCommand {
     @Inject
     FindImageInImageCommand() {}
 
-    public void findImageInImage(Image image, Image imageToFind) {
+    public Option<FindImageResult> findImageInImage(Image image, Image imageToFind, int yStart, int xStart, int height, int width) {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        for (int y = imageToFind.bottom(); y < image.height(); y++) {
-            for (int x = imageToFind.right(); x < image.width(); x++) {
+        for (int y = yStart + imageToFind.bottom(); y < yStart + height; y++) {
+            for (int x = xStart + imageToFind.right(); x < xStart + width; x++) {
                 int yCheck = y;
                 imageLoop:
                 for (int imageY = imageToFind.bottom(); 0 <= imageY; --imageY, --yCheck) {
@@ -30,13 +31,14 @@ public class FindImageInImageCommand {
                         if (imageY == 0 && imageX == 0) {
                             stopWatch.stop();
                             LOG.info("hit {},{} {}", yCheck, xCheck, stopWatch);
-                            return;
+                            return Option.of(ImmutableFindImageResult.of(yCheck, xCheck));
                         }
                     }
                 }
             }
         }
         stopWatch.stop();
-        LOG.info("finish {}", stopWatch);
+        LOG.info("no hit {}", stopWatch);
+        return Option.none();
     }
 }

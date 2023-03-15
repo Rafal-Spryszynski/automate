@@ -1,20 +1,17 @@
 package pl.allegro.automate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.vavr.control.Option;
 import pl.allegro.automate.gui.FindImageInImageCommand;
+import pl.allegro.automate.gui.FindImageResult;
 import pl.allegro.automate.gui.Image;
 import pl.allegro.automate.gui.LoadImageCommand;
 import pl.allegro.automate.gui.TakeScreenCaptureCommand;
 import pl.allegro.automate.os.ProcessCommand;
 
 import javax.inject.Inject;
-import java.lang.invoke.MethodHandles;
 import java.nio.file.Paths;
 
 class Automate {
-
-    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final ProcessCommand processCommand;
     private final LoadImageCommand loadImageCommand;
@@ -38,6 +35,26 @@ class Automate {
         processCommand.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
         Image vpnWindowImage = loadImageCommand.loadImage(Paths.get("C:\\Users\\rafal.spryszynski\\Desktop\\automate\\cisco client.png"));
         Image screenCaptureImage = takeScreenCaptureCommand.takeScreenCapture();
-        findImageInImageCommand.findImageInImage(screenCaptureImage, vpnWindowImage);
+        Option<FindImageResult> result = findImageInImageCommand.findImageInImage(
+            screenCaptureImage,
+            vpnWindowImage,
+            0,
+            0,
+            screenCaptureImage.height(),
+            screenCaptureImage.width()
+        );
+
+        if (result.isDefined()) {
+            FindImageResult findImageResult = result.get();
+            Image vpnConnectButton = loadImageCommand.loadImage(Paths.get("C:\\Users\\rafal.spryszynski\\Desktop\\automate\\cisco connect button.png"));
+            Option<FindImageResult> result2 = findImageInImageCommand.findImageInImage(
+                screenCaptureImage,
+                vpnConnectButton,
+                findImageResult.y(),
+                findImageResult.x(),
+                vpnWindowImage.height(),
+                vpnWindowImage.width()
+            );
+        }
     }
 }

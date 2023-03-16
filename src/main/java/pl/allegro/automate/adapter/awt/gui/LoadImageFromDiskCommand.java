@@ -11,19 +11,21 @@ import java.nio.file.Path;
 
 class LoadImageFromDiskCommand implements LoadImageCommand {
 
+    private final Path imagesPath;
     private final Metrics metrics;
     private final ImageCreator imageCreator;
 
     @Inject
-    LoadImageFromDiskCommand(Metrics metrics, ImageCreator imageCreator) {
+    LoadImageFromDiskCommand(Path imagesPath, Metrics metrics, ImageCreator imageCreator) {
+        this.imagesPath = imagesPath;
         this.metrics = metrics;
         this.imageCreator = imageCreator;
     }
 
     @Override
-    public Image loadImage(Path path) {
-        String fileName = path.getFileName().toString();
-        BufferedImage image = metrics.measure("load \"{0}\" image from disk", () -> ImageIO.read(path.toFile()), fileName);
-        return imageCreator.createImage(image, fileName);
+    public Image loadImage(String imageFileName) {
+        Path imageFilePath = imagesPath.resolve(imageFileName);
+        BufferedImage image = metrics.measure("load \"{0}\" image from disk", () -> ImageIO.read(imageFilePath.toFile()), imageFileName);
+        return imageCreator.createImage(image, imageFileName);
     }
 }

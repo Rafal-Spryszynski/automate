@@ -1,38 +1,30 @@
 package pl.allegro.automate.adapter.awt.gui;
 
+import org.immutables.value.Value;
 import pl.allegro.automate.gui.Image;
 
 import java.awt.image.BufferedImage;
 
-class GuiImage implements Image {
+@Value.Style(overshadowImplementation = true)
+@Value.Immutable
+interface GuiImage extends Image {
 
-    private final BufferedImage image;
-    private final int[][] imageCache;
-    private final String fileName;
+    BufferedImage image();
 
-    GuiImage(BufferedImage image, int[][] imageCache, String fileName) {
-        this.image = image;
-        this.imageCache = imageCache;
-        this.fileName = fileName;
+    int[][] imageCache();
+
+    @Override
+    default int height() {
+        return image().getHeight();
     }
 
     @Override
-    public int height() {
-        return image.getHeight();
+    default int width() {
+        return image().getWidth();
     }
 
     @Override
-    public int width() {
-        return image.getWidth();
-    }
-
-    @Override
-    public String name() {
-        return fileName;
-    }
-
-    @Override
-    public int getPixel(int y, int x) {
-        return imageCache[y][x];
+    default int getPixel(int y, int x) {
+        return imageCache()[y][x];
     }
 }

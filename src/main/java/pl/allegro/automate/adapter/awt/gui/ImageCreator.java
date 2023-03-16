@@ -18,7 +18,11 @@ class ImageCreator {
 
     Image createImage(BufferedImage image, String imageName) {
         int[][] imageCache = metrics.measure("cache \"{0}\" image", () -> cache(image), imageName);
-        return new GuiImage(image, imageCache, imageName);
+        return ImmutableGuiImage.builder()
+            .image(image)
+            .imageCache(imageCache)
+            .name(imageName)
+            .build();
     }
 
     private int[][] cache(BufferedImage image) {

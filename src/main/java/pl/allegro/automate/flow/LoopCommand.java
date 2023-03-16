@@ -9,10 +9,16 @@ import java.util.function.Supplier;
 public class LoopCommand {
 
     private final SleepCommand sleepCommand;
+    private final Duration defaultSleepDuration;
 
     @Inject
-    LoopCommand(SleepCommand sleepCommand) {
+    LoopCommand(SleepCommand sleepCommand, Duration defaultSleepDuration) {
         this.sleepCommand = sleepCommand;
+        this.defaultSleepDuration = defaultSleepDuration;
+    }
+
+    public <T> T loop(Supplier<Option<T>> automationSteps) {
+        return loop(automationSteps, defaultSleepDuration);
     }
 
     public <T> T loop(Supplier<Option<T>> automationSteps, Duration sleepDuration) {

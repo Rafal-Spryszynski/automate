@@ -13,7 +13,6 @@ import pl.allegro.automate.os.StartProcessCommand;
 import javax.inject.Inject;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.Duration;
 
 class Automate {
 
@@ -52,7 +51,7 @@ class Automate {
             Image screenCapture = takeScreenCaptureCommand.takeScreenCapture();
             return findImageInImageCommand.findImageInImage(screenCapture, vpnWindow)
                 .map(screenLocation -> Tuple.of(screenCapture, screenLocation));
-        }, Duration.ofMillis(200));
+        });
 
         Image screenCapture1 = findVpnWindowResult._1;
         ScreenLocation vpnWindowLocation = findVpnWindowResult._2;
@@ -66,8 +65,7 @@ class Automate {
                 vpnWindowLocation,
                 vpnWindow.height(),
                 vpnWindow.width()
-            ),
-            Duration.ofMillis(200)
+            )
         );
         sendMouseClickCommand.sendMouseClick(
             connectButtonLocation.y() + connectButton.verticalCenter(),
@@ -82,7 +80,7 @@ class Automate {
             return findImageInImageCommand.findImageInImage(screenCapture, passwordWindow1)
                 .onEmpty(() -> findImageInImageCommand.findImageInImage(screenCapture, passwordWindow2))
                 .map(screenLocation -> Tuple.of(screenCapture, screenLocation));
-        }, Duration.ofMillis(200));
+        });
 
         Image screenCapture2 = findPasswordWindowResult._1;
         ScreenLocation passwordWindowLocation = findPasswordWindowResult._2;
@@ -94,8 +92,7 @@ class Automate {
                 passwordWindowLocation,
                 passwordWindow2.height(),
                 passwordWindow2.width()
-            ),
-            Duration.ofMillis(200)
+            )
         );
         sendMouseClickCommand.sendMouseClick(
             okButtonLocation.y() + okButton.verticalCenter(),

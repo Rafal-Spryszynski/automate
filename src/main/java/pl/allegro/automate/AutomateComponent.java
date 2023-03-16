@@ -9,6 +9,7 @@ import pl.allegro.automate.adapter.system.flow.SystemFlowModule;
 import pl.allegro.automate.adapter.system.time.SystemTimeModule;
 
 import java.nio.file.Path;
+import java.time.Duration;
 
 @Component(modules = {
     AwtGuiModule.class,
@@ -29,6 +30,9 @@ interface AutomateComponent {
 
         @BindsInstance
         Builder saveScreenCaptures(boolean saveScreenCaptures);
+
+        @BindsInstance
+        Builder defaultSleepDuration(Duration duration);
 
         AutomateComponent build();
     }

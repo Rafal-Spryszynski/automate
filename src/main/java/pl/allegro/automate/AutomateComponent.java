@@ -2,16 +2,16 @@ package pl.allegro.automate;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import pl.allegro.automate.adapter.time.SystemTimeModule;
 import pl.allegro.automate.gui.GuiModule;
 import pl.allegro.automate.metrics.MetricsModule;
 import pl.allegro.automate.os.OsModule;
-import pl.allegro.automate.time.TimeModule;
 
 @Component(modules = {
     GuiModule.class,
     MetricsModule.class,
     OsModule.class,
-    TimeModule.class
+    SystemTimeModule.class
 })
 interface AutomateComponent {
 

@@ -21,7 +21,7 @@ class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
     private final Metrics metrics;
     private final ImageCreator imageCreator;
     private final boolean saveScreenCaptures;
-    private final SaveImageCommand saveImageCommand;
+    private final SaveImageToDiskCommand saveImageCommand;
     private final Clock clock;
 
     @Inject
@@ -29,7 +29,7 @@ class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
         Metrics metrics,
         ImageCreator imageCreator,
         boolean saveScreenCaptures,
-        SaveImageCommand saveImageCommand,
+        SaveImageToDiskCommand saveImageCommand,
         Clock clock
     ) {
         this.metrics = metrics;
@@ -56,7 +56,7 @@ class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
             LocalDateTime now = LocalDateTime.now(clock);
             String format = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH_mm_ss_SSS"));
             Path path = Paths.get(MessageFormat.format("C:\\Users\\rafal.spryszynski\\Desktop\\automate\\screen captures\\{0}.png", format));
-            saveImageCommand.saveImage(screenCaptureImage, path);
+            saveImageCommand.saveImage(screenCapture, path);
         }
         return screenCaptureImage;
     }

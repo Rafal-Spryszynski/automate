@@ -1,4 +1,4 @@
-package pl.allegro.automate.time;
+package pl.allegro.automate.adapter.time;
 
 import dagger.Module;
 import dagger.Provides;
@@ -6,7 +6,7 @@ import dagger.Provides;
 import java.time.Clock;
 
 @Module
-public interface TimeModule {
+public interface SystemTimeModule {
 
     @Provides
     static Clock provideClock() {

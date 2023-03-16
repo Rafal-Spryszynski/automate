@@ -5,15 +5,11 @@ import org.immutables.value.Value.Parameter;
 
 @Value.Style(overshadowImplementation = true)
 @Value.Immutable
-public interface ScreenLocation {
+public interface RectangleSize {
 
     @Parameter
-    int y();
+    int height();
 
     @Parameter
-    int x();
-
-    default ScreenLocation withOffset(ScreenLocation offset) {
-        return ImmutableScreenLocation.of(y() + offset.y(), x() + offset.x());
-    }
+    int width();
 }

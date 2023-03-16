@@ -52,7 +52,6 @@ class Automate {
             return findImageInImageCommand.findImageInImage(screenCapture, vpnWindow)
                 .map(screenLocation -> Tuple.of(screenCapture, screenLocation));
         });
-
         Image screenCapture1 = findVpnWindowResult._1;
         ScreenLocation vpnWindowLocation = findVpnWindowResult._2;
 
@@ -63,14 +62,11 @@ class Automate {
                 screenCapture1,
                 connectButton,
                 vpnWindowLocation,
-                vpnWindow.height(),
-                vpnWindow.width()
+                vpnWindow.size()
             )
         );
-        sendMouseClickCommand.sendMouseClick(
-            connectButtonLocation.y() + connectButton.verticalCenter(),
-            connectButtonLocation.x() + connectButton.horizontalCenter()
-        );
+        sendMouseClickCommand.sendMouseClick(connectButtonLocation.withOffset(connectButton.center()));
+
         Image passwordWindow1 = loadImageCommand.loadImage(imagesPath.resolve("cisco password window 1.png"));
         Image passwordWindow2 = loadImageCommand.loadImage(imagesPath.resolve("cisco password window 2.png"));
         Image okButton = loadImageCommand.loadImage(imagesPath.resolve("cisco ok button.png"));
@@ -81,7 +77,6 @@ class Automate {
                 .onEmpty(() -> findImageInImageCommand.findImageInImage(screenCapture, passwordWindow2))
                 .map(screenLocation -> Tuple.of(screenCapture, screenLocation));
         });
-
         Image screenCapture2 = findPasswordWindowResult._1;
         ScreenLocation passwordWindowLocation = findPasswordWindowResult._2;
 
@@ -90,13 +85,9 @@ class Automate {
                 screenCapture2,
                 okButton,
                 passwordWindowLocation,
-                passwordWindow2.height(),
-                passwordWindow2.width()
+                passwordWindow2.size()
             )
         );
-        sendMouseClickCommand.sendMouseClick(
-            okButtonLocation.y() + okButton.verticalCenter(),
-            okButtonLocation.x() + okButton.horizontalCenter()
-        );
+        sendMouseClickCommand.sendMouseClick(okButtonLocation.withOffset(okButton.center()));
     }
 }

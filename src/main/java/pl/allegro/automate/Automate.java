@@ -73,12 +73,14 @@ class Automate {
             connectButtonLocation.y() + connectButton.verticalCenter(),
             connectButtonLocation.x() + connectButton.horizontalCenter()
         );
-        Image passwordWindow = loadImageCommand.loadImage(imagesPath.resolve("cisco password window 2.png"));
+        Image passwordWindow1 = loadImageCommand.loadImage(imagesPath.resolve("cisco password window 1.png"));
+        Image passwordWindow2 = loadImageCommand.loadImage(imagesPath.resolve("cisco password window 2.png"));
         Image okButton = loadImageCommand.loadImage(imagesPath.resolve("cisco ok button.png"));
 
         var findPasswordWindowResult = loopCommand.loop(() -> {
             Image screenCapture = takeScreenCaptureCommand.takeScreenCapture();
-            return findImageInImageCommand.findImageInImage(screenCapture, passwordWindow)
+            return findImageInImageCommand.findImageInImage(screenCapture, passwordWindow1)
+                .onEmpty(() -> findImageInImageCommand.findImageInImage(screenCapture, passwordWindow2))
                 .map(screenLocation -> Tuple.of(screenCapture, screenLocation));
         }, Duration.ofMillis(200));
 
@@ -90,8 +92,8 @@ class Automate {
                 screenCapture2,
                 okButton,
                 passwordWindowLocation,
-                passwordWindow.height(),
-                passwordWindow.width()
+                passwordWindow2.height(),
+                passwordWindow2.width()
             ),
             Duration.ofMillis(200)
         );

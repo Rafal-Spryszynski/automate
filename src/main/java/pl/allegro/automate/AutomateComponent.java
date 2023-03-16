@@ -2,13 +2,15 @@ package pl.allegro.automate;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import pl.allegro.automate.adapter.awt.gui.AwtGuiModule;
 import pl.allegro.automate.adapter.logging.metrics.LoggingMetricsModule;
 import pl.allegro.automate.adapter.os.OsModule;
 import pl.allegro.automate.adapter.system.time.SystemTimeModule;
-import pl.allegro.automate.gui.GuiModule;
+
+import java.nio.file.Path;
 
 @Component(modules = {
-    GuiModule.class,
+    AwtGuiModule.class,
     LoggingMetricsModule.class,
     OsModule.class,
     SystemTimeModule.class
@@ -19,6 +21,9 @@ interface AutomateComponent {
 
     @Component.Builder
     interface Builder {
+
+        @BindsInstance
+        Builder imagesPath(Path path);
 
         @BindsInstance
         Builder saveScreenCaptures(boolean saveScreenCaptures);

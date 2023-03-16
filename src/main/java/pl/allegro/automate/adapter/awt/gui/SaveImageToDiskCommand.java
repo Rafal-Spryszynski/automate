@@ -1,4 +1,4 @@
-package pl.allegro.automate.gui;
+package pl.allegro.automate.adapter.awt.gui;
 
 import io.vavr.control.Try;
 

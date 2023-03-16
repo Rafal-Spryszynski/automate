@@ -1,6 +1,7 @@
-package pl.allegro.automate.gui;
+package pl.allegro.automate.adapter.awt.gui;
 
 import io.vavr.control.Try;
+import pl.allegro.automate.gui.SendMouseClickCommand;
 
 import javax.inject.Inject;
 import java.awt.Robot;

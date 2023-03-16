@@ -1,10 +1,13 @@
-package pl.allegro.automate.gui;
+package pl.allegro.automate.adapter.awt.gui;
 
 import dagger.Binds;
 import dagger.Module;
+import pl.allegro.automate.gui.LoadImageCommand;
+import pl.allegro.automate.gui.SendMouseClickCommand;
+import pl.allegro.automate.gui.TakeScreenCaptureCommand;
 
 @Module
-public interface GuiModule {
+public interface AwtGuiModule {
 
     @Binds
     LoadImageCommand bindLoadImageCommand(LoadImageFromDiskCommand command);

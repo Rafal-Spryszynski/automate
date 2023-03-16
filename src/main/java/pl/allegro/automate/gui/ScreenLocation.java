@@ -4,7 +4,7 @@ import org.immutables.value.Value;
 import org.immutables.value.Value.Parameter;
 
 @Value.Immutable
-public interface ImageLocation {
+public interface ScreenLocation {
 
     @Parameter
     int y();

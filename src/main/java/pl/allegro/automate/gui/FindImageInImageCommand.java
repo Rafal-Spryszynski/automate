@@ -15,11 +15,11 @@ public class FindImageInImageCommand {
     @Inject
     FindImageInImageCommand() {}
 
-    public Option<ImageLocation> findImageInImage(Image image, Image imageToFind) {
+    public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind) {
         return findImageInImage(image, imageToFind, 0, 0, image.height(), image.width());
     }
 
-    public Option<ImageLocation> findImageInImage(Image image, Image imageToFind, int yStart, int xStart, int height, int width) {
+    public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind, int yStart, int xStart, int height, int width) {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         for (int y = yStart + imageToFind.bottom(); y < yStart + height; y++) {
@@ -35,7 +35,7 @@ public class FindImageInImageCommand {
                         if (imageY == 0 && imageX == 0) {
                             stopWatch.stop();
                             LOG.info("hit {},{} {}", yCheck, xCheck, stopWatch);
-                            return Option.of(ImmutableImageLocation.of(yCheck, xCheck));
+                            return Option.of(ImmutableScreenLocation.of(yCheck, xCheck));
                         }
                     }
                 }

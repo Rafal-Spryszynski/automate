@@ -1,6 +1,8 @@
-package pl.allegro.automate.gui;
+package pl.allegro.automate.adapter.awt.gui;
 
 import io.vavr.control.Try;
+import pl.allegro.automate.gui.Image;
+import pl.allegro.automate.gui.TakeScreenCaptureCommand;
 import pl.allegro.automate.metrics.Metrics;
 
 import javax.inject.Inject;

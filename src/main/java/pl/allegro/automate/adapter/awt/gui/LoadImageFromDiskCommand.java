@@ -1,5 +1,7 @@
-package pl.allegro.automate.gui;
+package pl.allegro.automate.adapter.awt.gui;
 
+import pl.allegro.automate.gui.Image;
+import pl.allegro.automate.gui.LoadImageCommand;
 import pl.allegro.automate.metrics.Metrics;
 
 import javax.imageio.ImageIO;

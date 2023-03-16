@@ -16,10 +16,12 @@ public class FindImageInImageCommand {
     FindImageInImageCommand() {}
 
     public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind) {
-        return findImageInImage(image, imageToFind, 0, 0, image.height(), image.width());
+        return findImageInImage(image, imageToFind, ImmutableScreenLocation.of(0, 0), image.height(), image.width());
     }
 
-    public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind, int yStart, int xStart, int height, int width) {
+    public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind, ScreenLocation startLocation, int height, int width) {
+        int yStart = startLocation.y();
+        int xStart = startLocation.x();
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
         for (int y = yStart + imageToFind.bottom(); y < yStart + height; y++) {

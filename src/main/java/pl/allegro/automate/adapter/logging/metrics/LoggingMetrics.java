@@ -8,6 +8,7 @@ import pl.allegro.automate.metrics.Metrics;
 
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
+import java.text.MessageFormat;
 import java.util.concurrent.Callable;
 
 class LoggingMetrics implements Metrics {
@@ -18,7 +19,8 @@ class LoggingMetrics implements Metrics {
     LoggingMetrics() {}
 
     @Override
-    public <T> T measure(String label, Callable<T> action) {
+    public <T> T measure(String format, Callable<T> action, Object... arguments) {
+        String label = MessageFormat.format(format, arguments);
         StopWatch stopWatch = new StopWatch(label);
         stopWatch.start();
         T result = Try.of(action::call)

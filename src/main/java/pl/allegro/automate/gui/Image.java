@@ -6,6 +6,8 @@ public interface Image {
 
     int width();
 
+    String name();
+
     default int bottom() {
         return height() - 1;
     }

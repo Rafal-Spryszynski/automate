@@ -22,7 +22,7 @@ public class FindImageInImageCommand {
     public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind, ScreenLocation startLocation, int height, int width) {
         int yStart = startLocation.y();
         int xStart = startLocation.x();
-        StopWatch stopWatch = new StopWatch();
+        StopWatch stopWatch = new StopWatch("\"" + imageToFind.name() + "\"");
         stopWatch.start();
         for (int y = yStart + imageToFind.bottom(); y < yStart + height; y++) {
             for (int x = xStart + imageToFind.right(); x < xStart + width; x++) {

@@ -16,9 +16,9 @@ class ImageCreator {
         this.metrics = metrics;
     }
 
-    Image createImage(BufferedImage image) {
-        int[][] imageCache = metrics.measure("cache image", () -> cache(image));
-        return new GuiImage(image, imageCache);
+    Image createImage(BufferedImage image, String imageName) {
+        int[][] imageCache = metrics.measure("cache \"{0}\" image", () -> cache(image), imageName);
+        return new GuiImage(image, imageCache, imageName);
     }
 
     private int[][] cache(BufferedImage image) {

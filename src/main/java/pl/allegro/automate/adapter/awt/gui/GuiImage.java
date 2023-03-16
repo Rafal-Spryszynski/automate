@@ -8,10 +8,12 @@ class GuiImage implements Image {
 
     private final BufferedImage image;
     private final int[][] imageCache;
+    private final String fileName;
 
-    GuiImage(BufferedImage image, int[][] imageCache) {
+    GuiImage(BufferedImage image, int[][] imageCache, String fileName) {
         this.image = image;
         this.imageCache = imageCache;
+        this.fileName = fileName;
     }
 
     @Override
@@ -22,6 +24,11 @@ class GuiImage implements Image {
     @Override
     public int width() {
         return image.getWidth();
+    }
+
+    @Override
+    public String name() {
+        return fileName;
     }
 
     @Override

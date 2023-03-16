@@ -22,7 +22,8 @@ class LoadImageFromDiskCommand implements LoadImageCommand {
 
     @Override
     public Image loadImage(Path path) {
-        BufferedImage image = metrics.measure("load image from disk", () -> ImageIO.read(path.toFile()));
-        return imageCreator.createImage(image);
+        String fileName = path.getFileName().toString();
+        BufferedImage image = metrics.measure("load \"{0}\" image from disk", () -> ImageIO.read(path.toFile()), fileName);
+        return imageCreator.createImage(image, fileName);
     }
 }

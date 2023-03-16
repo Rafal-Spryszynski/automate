@@ -4,5 +4,5 @@ import java.util.concurrent.Callable;
 
 public interface Metrics {
 
-    <T> T measure(String label, Callable<T> action) throws Exception;
+    <T> T measure(String label, Callable<T> action);
 }

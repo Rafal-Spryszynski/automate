@@ -15,7 +15,7 @@ class ImageCreator {
         this.metrics = metrics;
     }
 
-    Image createImage(BufferedImage image) throws Exception {
+    Image createImage(BufferedImage image) {
         int[][] imageCache = metrics.measure("cache image", () -> cache(image));
         return new GuiImage(image, imageCache);
     }

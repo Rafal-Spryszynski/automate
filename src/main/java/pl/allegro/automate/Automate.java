@@ -35,7 +35,7 @@ class Automate {
         this.sendMouseClickCommand = sendMouseClickCommand;
     }
 
-    void runAutomation() throws Exception {
+    void runAutomation() throws InterruptedException {
         startProcessCommand.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
         Image vpnWindow = loadImageCommand.loadImage(Paths.get("C:\\Users\\rafal.spryszynski\\Desktop\\automate\\cisco client.png"));
         Image screenCapture1 = takeScreenCaptureCommand.takeScreenCapture();

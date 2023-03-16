@@ -1,5 +1,6 @@
 package pl.allegro.automate.adapter.logging.metrics;
 
+import io.vavr.control.Try;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +18,18 @@ class LoggingMetrics implements Metrics {
     LoggingMetrics() {}
 
     @Override
-    public <T> T measure(String label, Callable<T> action) throws Exception {
+    public <T> T measure(String label, Callable<T> action) {
         StopWatch stopWatch = new StopWatch(label);
         stopWatch.start();
-        T result = action.call();
+        T result = Try.of(action::call)
+            .onFailure(e -> logTime(stopWatch))
+            .get();
+        logTime(stopWatch);
+        return result;
+    }
+
+    private void logTime(StopWatch stopWatch) {
         stopWatch.stop();
         LOG.info("{}", stopWatch);
-        return result;
     }
 }

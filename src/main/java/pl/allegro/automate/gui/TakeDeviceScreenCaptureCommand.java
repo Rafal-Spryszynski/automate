@@ -1,5 +1,6 @@
 package pl.allegro.automate.gui;
 
+import io.vavr.control.Try;
 import pl.allegro.automate.metrics.Metrics;
 
 import javax.inject.Inject;
@@ -40,8 +41,8 @@ class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
     }
 
     @Override
-    public Image takeScreenCapture() throws Exception {
-        Robot robot = new Robot();
+    public Image takeScreenCapture() {
+        Robot robot = Try.of(Robot::new).get();
 
         robot.delay(200);
 

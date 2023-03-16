@@ -1,13 +1,15 @@
-package pl.allegro.automate.os;
+package pl.allegro.automate.adapter.os;
+
+import pl.allegro.automate.os.StartProcessCommand;
 
 import javax.inject.Inject;
 import java.io.IOException;
 import java.nio.file.Path;
 
-class OsProcessCommand implements ProcessCommand {
+class StartOsProcessCommand implements StartProcessCommand {
 
     @Inject
-    OsProcessCommand() {}
+    StartOsProcessCommand() {}
 
     @Override
     public void startProcess(Path path) throws IOException {

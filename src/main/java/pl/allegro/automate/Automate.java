@@ -7,14 +7,14 @@ import pl.allegro.automate.gui.ImageLocation;
 import pl.allegro.automate.gui.LoadImageCommand;
 import pl.allegro.automate.gui.SendMouseClickCommand;
 import pl.allegro.automate.gui.TakeScreenCaptureCommand;
-import pl.allegro.automate.os.ProcessCommand;
+import pl.allegro.automate.os.StartProcessCommand;
 
 import javax.inject.Inject;
 import java.nio.file.Paths;
 
 class Automate {
 
-    private final ProcessCommand processCommand;
+    private final StartProcessCommand startProcessCommand;
     private final LoadImageCommand loadImageCommand;
     private final TakeScreenCaptureCommand takeScreenCaptureCommand;
     private final FindImageInImageCommand findImageInImageCommand;
@@ -22,13 +22,13 @@ class Automate {
 
     @Inject
     Automate(
-        ProcessCommand processCommand,
+        StartProcessCommand startProcessCommand,
         LoadImageCommand loadImageCommand,
         TakeScreenCaptureCommand takeScreenCaptureCommand,
         FindImageInImageCommand findImageInImageCommand,
         SendMouseClickCommand sendMouseClickCommand
     ) {
-        this.processCommand = processCommand;
+        this.startProcessCommand = startProcessCommand;
         this.loadImageCommand = loadImageCommand;
         this.takeScreenCaptureCommand = takeScreenCaptureCommand;
         this.findImageInImageCommand = findImageInImageCommand;
@@ -36,7 +36,7 @@ class Automate {
     }
 
     void runAutomation() throws Exception {
-        processCommand.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
+        startProcessCommand.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
         Image vpnWindow = loadImageCommand.loadImage(Paths.get("C:\\Users\\rafal.spryszynski\\Desktop\\automate\\cisco client.png"));
         Image screenCapture1 = takeScreenCaptureCommand.takeScreenCapture();
         Option<ImageLocation> findVpnWindowResult = findImageInImageCommand.findImageInImage(screenCapture1, vpnWindow);

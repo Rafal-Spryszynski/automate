@@ -3,7 +3,7 @@ package pl.allegro.automate.os;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public interface ProcessCommand {
+public interface StartProcessCommand {
 
     void startProcess(Path path) throws IOException;
 }

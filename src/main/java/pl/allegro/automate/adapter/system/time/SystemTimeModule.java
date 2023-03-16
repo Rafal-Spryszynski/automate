@@ -1,4 +1,4 @@
-package pl.allegro.automate.adapter.time;
+package pl.allegro.automate.adapter.system.time;
 
 import dagger.Module;
 import dagger.Provides;

@@ -1,8 +1,9 @@
-package pl.allegro.automate.metrics;
+package pl.allegro.automate.adapter.logging.metrics;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.allegro.automate.metrics.Metrics;
 
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;

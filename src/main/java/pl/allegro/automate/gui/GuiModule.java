@@ -13,4 +13,9 @@ public interface GuiModule {
     @AutomationStepKey(FindImageInImageCommand.class)
     @IntoMap
     AutomationStep bindFindImageInImageCommand(FindImageInImageCommand command);
+
+    @Binds
+    @AutomationStepKey(FindImageOnScreenAutomationStep.class)
+    @IntoMap
+    AutomationStep bindFindImageOnScreenAutomationStep(FindImageOnScreenAutomationStep command);
 }

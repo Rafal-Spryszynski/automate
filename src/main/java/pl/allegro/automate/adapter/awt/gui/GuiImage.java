@@ -5,7 +5,6 @@ import pl.allegro.automate.gui.Image;
 
 import java.awt.image.BufferedImage;
 
-@Value.Style(overshadowImplementation = true)
 @Value.Immutable
 interface GuiImage extends Image {
 

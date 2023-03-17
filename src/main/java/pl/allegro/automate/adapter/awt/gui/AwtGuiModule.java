@@ -25,9 +25,12 @@ interface AwtGuiModule {
     AutomationStep bindLoadImageCommand(LoadImageFromDiskCommand command);
 
     @Binds
+    TakeScreenCaptureCommand bindTakeScreenCaptureCommand(TakeDeviceScreenCaptureCommand command);
+
+    @Binds
     @AutomationStepKey(TakeScreenCaptureCommand.class)
     @IntoMap
-    AutomationStep bindTakeScreenCaptureCommand(TakeDeviceScreenCaptureCommand command);
+    AutomationStep bindTakeScreenCaptureStep(TakeDeviceScreenCaptureCommand command);
 
     @Binds
     @AutomationStepKey(SendMouseClickCommand.class)

@@ -4,5 +4,7 @@ import pl.allegro.automate.AutomationStep;
 
 public interface LoadImageCommand extends AutomationStep {
 
-    Image loadImage(String imageFileName);
+    default Image loadImage(String imageFileName) {
+        return (Image) execute(imageFileName);
+    }
 }

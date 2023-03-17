@@ -14,7 +14,8 @@ class SendDeviceMouseClickCommand implements SendMouseClickCommand {
     SendDeviceMouseClickCommand() {}
 
     @Override
-    public void sendMouseClick(ScreenLocation screenLocation) {
+    public void run(Object... arguments) {
+        ScreenLocation screenLocation = (ScreenLocation) arguments[0];
         Robot robot = Try.of(Robot::new).get();
         robot.setAutoDelay(200);
         robot.mouseMove(screenLocation.x(), screenLocation.y());

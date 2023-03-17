@@ -1,10 +1,12 @@
 package pl.allegro.automate.os;
 
-import pl.allegro.automate.AutomationStep;
+import pl.allegro.automate.VoidAutomationStep;
 
 import java.nio.file.Path;
 
-public interface StartProcessCommand extends AutomationStep {
+public interface StartProcessCommand extends VoidAutomationStep {
 
-    void startProcess(Path path);
+    default void startProcess(Path path) {
+        run(path);
+    }
 }

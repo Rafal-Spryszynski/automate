@@ -4,5 +4,7 @@ import pl.allegro.automate.AutomationStep;
 
 public interface TakeScreenCaptureCommand extends AutomationStep {
 
-    Image takeScreenCapture();
+    default Image takeScreenCapture() {
+        return (Image) execute();
+    }
 }

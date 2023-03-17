@@ -17,10 +17,19 @@ public class FindImageInImageCommand implements AutomationStep {
     FindImageInImageCommand() {}
 
     public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind) {
-        return findImageInImage(image, imageToFind, ImmutableScreenLocation.of(0, 0), image.size());
+        return execute(image, imageToFind, ImmutableScreenLocation.of(0, 0), image.size());
     }
 
     public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind, ScreenLocation startLocation, RectangleSize size) {
+        return execute(image, imageToFind, startLocation, size);
+    }
+
+    @Override
+    public Option<ScreenLocation> execute(Object... arguments) {
+        Image image = (Image) arguments[0];
+        Image imageToFind = (Image) arguments[1];
+        ScreenLocation startLocation = (ScreenLocation) arguments[2];
+        RectangleSize size = (RectangleSize) arguments[3];
         int yStart = startLocation.y();
         int xStart = startLocation.x();
         int height = size.height();

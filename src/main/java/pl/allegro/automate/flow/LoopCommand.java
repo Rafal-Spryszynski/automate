@@ -19,11 +19,14 @@ public class LoopCommand implements AutomationStep {
     }
 
     public <T> T loop(Supplier<Option<T>> automationSteps) {
-        return loop(automationSteps, defaultSleepDuration);
+        return (T) execute(automationSteps, defaultSleepDuration);
     }
 
-    public <T> T loop(Supplier<Option<T>> automationSteps, Duration sleepDuration) {
-        Option<T> result = automationSteps.get();
+    @Override
+    public Object execute(Object... arguments) {
+        Supplier<Option<?>> automationSteps = (Supplier<Option<?>>) arguments[0];
+        Duration sleepDuration = (Duration) arguments[1];
+        Option<?> result = automationSteps.get();
 
         while (result.isEmpty()) {
             sleepCommand.sleep(sleepDuration);

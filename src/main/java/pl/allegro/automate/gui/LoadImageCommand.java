@@ -1,6 +1,8 @@
 package pl.allegro.automate.gui;
 
-public interface LoadImageCommand {
+import pl.allegro.automate.AutomationStep;
+
+public interface LoadImageCommand extends AutomationStep {
 
     Image loadImage(String imageFileName);
 }

@@ -1,12 +1,13 @@
 package pl.allegro.automate.flow;
 
 import io.vavr.control.Option;
+import pl.allegro.automate.AutomationStep;
 
 import javax.inject.Inject;
 import java.time.Duration;
 import java.util.function.Supplier;
 
-public class LoopCommand {
+public class LoopCommand implements AutomationStep {
 
     private final SleepCommand sleepCommand;
     private final Duration defaultSleepDuration;

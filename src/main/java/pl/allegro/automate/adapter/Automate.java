@@ -1,6 +1,7 @@
-package pl.allegro.automate;
+package pl.allegro.automate.adapter;
 
 import io.vavr.Tuple;
+import pl.allegro.automate.AutomationStepsRegistry;
 import pl.allegro.automate.flow.LoopCommand;
 import pl.allegro.automate.flow.SleepCommand;
 import pl.allegro.automate.gui.FindImageInImageCommand;
@@ -17,36 +18,25 @@ import java.time.Duration;
 
 class Automate {
 
-    private final StartProcessCommand startProcessCommand;
-    private final LoadImageCommand loadImageCommand;
-    private final TakeScreenCaptureCommand takeScreenCaptureCommand;
-    private final FindImageInImageCommand findImageInImageCommand;
-    private final SendMouseClickCommand sendMouseClickCommand;
-    private final LoopCommand loopCommand;
-    private final SleepCommand sleepCommand;
+    private final AutomationStepsRegistry registry;
 
     @Inject
-    Automate(
-        StartProcessCommand startProcessCommand,
-        LoadImageCommand loadImageCommand,
-        TakeScreenCaptureCommand takeScreenCaptureCommand,
-        FindImageInImageCommand findImageInImageCommand,
-        SendMouseClickCommand sendMouseClickCommand,
-        LoopCommand loopCommand,
-        SleepCommand sleepCommand
-    ) {
-        this.startProcessCommand = startProcessCommand;
-        this.loadImageCommand = loadImageCommand;
-        this.takeScreenCaptureCommand = takeScreenCaptureCommand;
-        this.findImageInImageCommand = findImageInImageCommand;
-        this.sendMouseClickCommand = sendMouseClickCommand;
-        this.loopCommand = loopCommand;
-        this.sleepCommand = sleepCommand;
+    Automate(AutomationStepsRegistry registry) {
+        this.registry = registry;
     }
 
     void runAutomation() {
+        StartProcessCommand startProcessCommand = registry.get(StartProcessCommand.class);
+        LoadImageCommand loadImageCommand = registry.get(LoadImageCommand.class);
+        LoopCommand loopCommand = registry.get(LoopCommand.class);
+        TakeScreenCaptureCommand takeScreenCaptureCommand = registry.get(TakeScreenCaptureCommand.class);
+        FindImageInImageCommand findImageInImageCommand = registry.get(FindImageInImageCommand.class);
+        SendMouseClickCommand sendMouseClickCommand = registry.get(SendMouseClickCommand.class);
+        SleepCommand sleepCommand = registry.get(SleepCommand.class);
+
         startProcessCommand.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
-        Image vpnWindow = loadImageCommand.loadImage("cisco client.png");
+
+        Image vpnWindow = loadImageCommand.loadImage("cisco client window.png");
 
         var findVpnWindowResult = loopCommand.loop(() -> {
             Image screenCapture = takeScreenCaptureCommand.takeScreenCapture();

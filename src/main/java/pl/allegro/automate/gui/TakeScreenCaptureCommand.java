@@ -1,6 +1,8 @@
 package pl.allegro.automate.gui;
 
-public interface TakeScreenCaptureCommand {
+import pl.allegro.automate.AutomationStep;
+
+public interface TakeScreenCaptureCommand extends AutomationStep {
 
     Image takeScreenCapture();
 }

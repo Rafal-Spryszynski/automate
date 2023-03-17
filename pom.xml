@@ -121,7 +121,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>pl.allegro.automate.AutomateMain</mainClass>
+                            <mainClass>pl.allegro.automate.adapter.AutomateMain</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

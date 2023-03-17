@@ -4,11 +4,12 @@ import io.vavr.control.Option;
 import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.allegro.automate.AutomationStep;
 
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 
-public class FindImageInImageCommand {
+public class FindImageInImageCommand implements AutomationStep {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 

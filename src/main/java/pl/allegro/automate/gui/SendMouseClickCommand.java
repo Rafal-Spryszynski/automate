@@ -1,6 +1,8 @@
 package pl.allegro.automate.gui;
 
-public interface SendMouseClickCommand {
+import pl.allegro.automate.AutomationStep;
+
+public interface SendMouseClickCommand extends AutomationStep {
 
     void sendMouseClick(ScreenLocation screenLocation);
 }

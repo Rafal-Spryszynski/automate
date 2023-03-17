@@ -14,6 +14,9 @@ interface GuiImage extends Image {
     int[][] imageCache();
 
     @Override
+    String name();
+
+    @Override
     default int height() {
         return image().getHeight();
     }

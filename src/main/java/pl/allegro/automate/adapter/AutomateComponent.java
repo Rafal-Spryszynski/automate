@@ -1,23 +1,27 @@
-package pl.allegro.automate;
+package pl.allegro.automate.adapter;
 
 import dagger.BindsInstance;
 import dagger.Component;
-import pl.allegro.automate.adapter.awt.gui.AwtGuiModule;
+import pl.allegro.automate.adapter.awt.gui.AwtGuiComponent;
 import pl.allegro.automate.adapter.logging.metrics.LoggingMetricsModule;
 import pl.allegro.automate.adapter.os.OsModule;
 import pl.allegro.automate.adapter.system.flow.SystemFlowModule;
-import pl.allegro.automate.adapter.system.time.SystemTimeModule;
+import pl.allegro.automate.flow.FlowModule;
+import pl.allegro.automate.gui.GuiModule;
 
-import java.nio.file.Path;
 import java.time.Duration;
 
-@Component(modules = {
-    AwtGuiModule.class,
-    LoggingMetricsModule.class,
-    OsModule.class,
-    SystemFlowModule.class,
-    SystemTimeModule.class
-})
+@Component(
+    modules = {
+        AutomateModule.class,
+        FlowModule.class,
+        GuiModule.class,
+        LoggingMetricsModule.class,
+        OsModule.class,
+        SystemFlowModule.class
+    },
+    dependencies = AwtGuiComponent.class
+)
 interface AutomateComponent {
 
     Automate automate();
@@ -25,11 +29,7 @@ interface AutomateComponent {
     @Component.Builder
     interface Builder {
 
-        @BindsInstance
-        Builder imagesPath(Path path);
-
-        @BindsInstance
-        Builder saveScreenCaptures(boolean saveScreenCaptures);
+        Builder awtGuiComponent(AwtGuiComponent awtGuiComponent);
 
         @BindsInstance
         Builder defaultSleepDuration(Duration duration);

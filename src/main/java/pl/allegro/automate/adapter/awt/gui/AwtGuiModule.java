@@ -2,19 +2,35 @@ package pl.allegro.automate.adapter.awt.gui;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.multibindings.IntoMap;
+import pl.allegro.automate.AutomationStep;
+import pl.allegro.automate.AutomationStepKey;
+import pl.allegro.automate.gui.GuiAutomationSteps;
 import pl.allegro.automate.gui.LoadImageCommand;
 import pl.allegro.automate.gui.SendMouseClickCommand;
 import pl.allegro.automate.gui.TakeScreenCaptureCommand;
 
+import java.util.Map;
+
 @Module
-public interface AwtGuiModule {
+interface AwtGuiModule {
 
     @Binds
-    LoadImageCommand bindLoadImageCommand(LoadImageFromDiskCommand command);
+    @GuiAutomationSteps
+    Map<Class<? extends AutomationStep>, AutomationStep> guiAutomationSteps(Map<Class<? extends AutomationStep>, AutomationStep> guiAutomationSteps);
 
     @Binds
-    TakeScreenCaptureCommand bindTakeScreenCaptureCommand(TakeDeviceScreenCaptureCommand command);
+    @AutomationStepKey(LoadImageCommand.class)
+    @IntoMap
+    AutomationStep bindLoadImageCommand(LoadImageFromDiskCommand command);
 
     @Binds
-    SendMouseClickCommand bindSendMouseClickCommand(SendDeviceMouseClickCommand command);
+    @AutomationStepKey(TakeScreenCaptureCommand.class)
+    @IntoMap
+    AutomationStep bindTakeScreenCaptureCommand(TakeDeviceScreenCaptureCommand command);
+
+    @Binds
+    @AutomationStepKey(SendMouseClickCommand.class)
+    @IntoMap
+    AutomationStep bindSendMouseClickCommand(SendDeviceMouseClickCommand command);
 }

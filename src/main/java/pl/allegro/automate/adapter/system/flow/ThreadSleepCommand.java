@@ -12,8 +12,7 @@ class ThreadSleepCommand implements SleepCommand {
     ThreadSleepCommand() {}
 
     @Override
-    public void run(Object... arguments) {
-        Duration duration = (Duration) arguments[0];
+    public void sleep(Duration duration) {
         Try.run(() -> Thread.sleep(duration.toMillis())).get();
     }
 }

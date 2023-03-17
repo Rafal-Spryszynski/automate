@@ -45,7 +45,7 @@ class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
     }
 
     @Override
-    public Image execute(Object... arguments) {
+    public Image takeScreenCapture() {
         Robot robot = Try.of(Robot::new).get();
 
         robot.delay(200);

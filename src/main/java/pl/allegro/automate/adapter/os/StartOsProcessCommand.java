@@ -12,8 +12,7 @@ class StartOsProcessCommand implements StartProcessCommand {
     StartOsProcessCommand() {}
 
     @Override
-    public void run(Object... arguments) {
-        Path path = (Path) arguments[0];
+    public void startProcess(Path path) {
         Try.run(() ->
             new ProcessBuilder(path.toString())
                 .start()

@@ -1,12 +1,10 @@
 package pl.allegro.automate.flow;
 
-import pl.allegro.automate.VoidAutomationStep;
+import pl.allegro.automate.AutomationStep;
 
 import java.time.Duration;
 
-public interface SleepCommand extends VoidAutomationStep {
+public interface SleepCommand extends AutomationStep {
 
-    default void sleep(Duration duration) {
-        run(duration);
-    }
+    void sleep(Duration duration);
 }

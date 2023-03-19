@@ -12,7 +12,7 @@ class AutomateMain {
         AwtGuiComponent awtGuiComponent = DaggerAwtGuiComponent.builder()
             .imagesPath(Paths.get("C:\\Users\\rafal.spryszynski\\Desktop\\automate"))
             .saveScreenCaptures(true)
-            .autoDelay(Duration.ofMillis(200))
+            .autoDelay(Duration.ofMillis(100))
             .build();
 
         Automate automate = DaggerAutomateComponent.builder()

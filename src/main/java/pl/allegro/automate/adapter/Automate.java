@@ -8,12 +8,13 @@ import pl.allegro.automate.gui.ImageOnScreen;
 import pl.allegro.automate.gui.LoadImageCommand;
 import pl.allegro.automate.gui.ScreenLocation;
 import pl.allegro.automate.gui.SendMouseClickCommand;
+import pl.allegro.automate.gui.TypeCharsAutomationStep;
 import pl.allegro.automate.system.console.ConsoleAutomationStep;
+import pl.allegro.automate.system.console.ImmutablePassword;
 import pl.allegro.automate.system.console.Password;
 import pl.allegro.automate.system.process.StartProcessAutomationStep;
 
 import javax.inject.Inject;
-import java.nio.file.Paths;
 import java.time.Duration;
 
 class Automate {
@@ -27,15 +28,18 @@ class Automate {
 
     void runAutomation() {
         ConsoleAutomationStep consoleAutomationStep = registry.get(ConsoleAutomationStep.class);
+        TypeCharsAutomationStep typeCharsAutomationStep = registry.get(TypeCharsAutomationStep.class);
         StartProcessAutomationStep startProcessAutomationStep = registry.get(StartProcessAutomationStep.class);
         LoadImageCommand loadImageCommand = registry.get(LoadImageCommand.class);
         FindImageOnScreenAutomationStep findImageOnScreen = registry.get(FindImageOnScreenAutomationStep.class);
         SendMouseClickCommand sendMouseClickCommand = registry.get(SendMouseClickCommand.class);
         SleepCommand sleepCommand = registry.get(SleepCommand.class);
 
-        Password domainPassword = consoleAutomationStep.promptPassword("Domain password: ");
+//        Password domainPassword = consoleAutomationStep.promptPassword("Domain password: ");
+        Password domainPassword = ImmutablePassword.of("Test".toCharArray());
+        typeCharsAutomationStep.typeChars(domainPassword);
 
-        startProcessAutomationStep.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
+//        startProcessAutomationStep.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
 
         Image vpnWindow1 = loadImageCommand.loadImage("cisco client window 1.png");
         Image vpnWindow2 = loadImageCommand.loadImage("cisco client window 2.png");

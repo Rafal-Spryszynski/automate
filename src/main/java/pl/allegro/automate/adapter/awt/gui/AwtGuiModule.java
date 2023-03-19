@@ -11,6 +11,7 @@ import pl.allegro.automate.gui.GuiAutomationSteps;
 import pl.allegro.automate.gui.LoadImageCommand;
 import pl.allegro.automate.gui.SendMouseClickCommand;
 import pl.allegro.automate.gui.TakeScreenCaptureCommand;
+import pl.allegro.automate.gui.TypeCharsAutomationStep;
 
 import java.awt.Robot;
 import java.time.Duration;
@@ -40,6 +41,11 @@ interface AwtGuiModule {
     @AutomationStepKey(SendMouseClickCommand.class)
     @IntoMap
     AutomationStep bindSendMouseClickCommand(SendDeviceMouseClickAutomationStep command);
+
+    @Binds
+    @AutomationStepKey(TypeCharsAutomationStep.class)
+    @IntoMap
+    AutomationStep typeCharsAutomationStep(TypeKeyboardCharsAutomationStep automationStep);
 
     @Provides
     static Robot robot(Duration autoDelay) {

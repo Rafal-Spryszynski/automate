@@ -3,6 +3,7 @@ package pl.allegro.automate.adapter;
 import dagger.Module;
 import dagger.Provides;
 import io.vavr.Tuple;
+import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
 import pl.allegro.automate.AutomationStep;
@@ -21,12 +22,20 @@ interface AutomateModule {
         var allAutomationSteps = new java.util.HashMap<>(automationSteps);
         allAutomationSteps.putAll(guiAutomationSteps);
         return HashMap.ofAll(allAutomationSteps)
-            .map((automationStepKey, automationStep) -> {
-                if (!automationStepKey.isInterface()) {
-                    return Tuple.of(automationStepKey, automationStep);
-                }
-                AutomationStep automationStepProxy = loggingAutomationStepFactory.decorate(automationStepKey, automationStep);
-                return Tuple.of(automationStepKey, automationStepProxy);
-            });
+            .map((automationStepKey, automationStep) ->
+                decorateWithLogging(loggingAutomationStepFactory, automationStepKey, automationStep)
+            );
+    }
+
+    private static Tuple2<Class<? extends AutomationStep>, AutomationStep> decorateWithLogging(
+        LoggingAutomationStepFactory loggingAutomationStepFactory,
+        Class<? extends AutomationStep> automationStepKey,
+        AutomationStep automationStep
+    ) {
+        if (!automationStepKey.isInterface()) {
+            return Tuple.of(automationStepKey, automationStep);
+        }
+        AutomationStep automationStepProxy = loggingAutomationStepFactory.decorate(automationStepKey, automationStep);
+        return Tuple.of(automationStepKey, automationStepProxy);
     }
 }

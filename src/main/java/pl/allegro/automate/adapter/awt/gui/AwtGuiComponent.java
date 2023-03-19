@@ -9,6 +9,7 @@ import pl.allegro.automate.gui.GuiAutomationSteps;
 import pl.allegro.automate.gui.TakeScreenCaptureCommand;
 
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.Map;
 
 @Component(modules = {
@@ -31,6 +32,9 @@ public interface AwtGuiComponent {
 
         @BindsInstance
         Builder saveScreenCaptures(boolean saveScreenCaptures);
+
+        @BindsInstance
+        Builder autoDelay(Duration autoDelay);
 
         AwtGuiComponent build();
     }

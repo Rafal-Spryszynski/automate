@@ -1,6 +1,5 @@
 package pl.allegro.automate.adapter.awt.gui;
 
-import io.vavr.control.Try;
 import pl.allegro.automate.gui.Image;
 import pl.allegro.automate.gui.TakeScreenCaptureCommand;
 import pl.allegro.automate.metrics.Metrics;
@@ -18,8 +17,9 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
+class TakeDeviceScreenCaptureAutomationStep implements TakeScreenCaptureCommand {
 
+    private final Robot robot;
     private final Metrics metrics;
     private final ImageCreator imageCreator;
     private final boolean saveScreenCaptures;
@@ -28,7 +28,8 @@ class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
     private final Path imagesPath;
 
     @Inject
-    TakeDeviceScreenCaptureCommand(
+    TakeDeviceScreenCaptureAutomationStep(
+        Robot robot,
         Metrics metrics,
         ImageCreator imageCreator,
         boolean saveScreenCaptures,
@@ -36,6 +37,7 @@ class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
         Clock clock,
         Path imagesPath
     ) {
+        this.robot = robot;
         this.metrics = metrics;
         this.imageCreator = imageCreator;
         this.saveScreenCaptures = saveScreenCaptures;
@@ -46,10 +48,6 @@ class TakeDeviceScreenCaptureCommand implements TakeScreenCaptureCommand {
 
     @Override
     public Image takeScreenCapture() {
-        Robot robot = Try.of(Robot::new).get();
-
-        robot.delay(200);
-
         BufferedImage screenCapture = metrics.measure("createScreenCapture", () -> {
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
             Rectangle rectangle = new Rectangle(new Point(), screenSize);

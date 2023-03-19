@@ -5,6 +5,7 @@ import dagger.Component;
 import pl.allegro.automate.adapter.awt.gui.AwtGuiComponent;
 import pl.allegro.automate.adapter.logging.metrics.LoggingMetricsModule;
 import pl.allegro.automate.adapter.os.OsModule;
+import pl.allegro.automate.adapter.system.console.ConsoleModule;
 import pl.allegro.automate.adapter.system.flow.SystemFlowModule;
 import pl.allegro.automate.flow.FlowModule;
 import pl.allegro.automate.gui.GuiModule;
@@ -18,6 +19,7 @@ import java.time.Duration;
         GuiModule.class,
         LoggingMetricsModule.class,
         OsModule.class,
+        ConsoleModule.class,
         SystemFlowModule.class
     },
     dependencies = AwtGuiComponent.class

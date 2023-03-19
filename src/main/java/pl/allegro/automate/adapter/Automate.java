@@ -9,6 +9,8 @@ import pl.allegro.automate.gui.LoadImageCommand;
 import pl.allegro.automate.gui.ScreenLocation;
 import pl.allegro.automate.gui.SendMouseClickCommand;
 import pl.allegro.automate.os.StartProcessCommand;
+import pl.allegro.automate.system.console.ConsoleAutomationStep;
+import pl.allegro.automate.system.console.Password;
 
 import javax.inject.Inject;
 import java.nio.file.Paths;
@@ -24,11 +26,14 @@ class Automate {
     }
 
     void runAutomation() {
+        ConsoleAutomationStep consoleAutomationStep = registry.get(ConsoleAutomationStep.class);
         StartProcessCommand startProcessCommand = registry.get(StartProcessCommand.class);
         LoadImageCommand loadImageCommand = registry.get(LoadImageCommand.class);
         FindImageOnScreenAutomationStep findImageOnScreen = registry.get(FindImageOnScreenAutomationStep.class);
         SendMouseClickCommand sendMouseClickCommand = registry.get(SendMouseClickCommand.class);
         SleepCommand sleepCommand = registry.get(SleepCommand.class);
+
+        Password domainPassword = consoleAutomationStep.promptPassword("Domain password: ");
 
         startProcessCommand.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
 

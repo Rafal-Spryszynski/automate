@@ -55,12 +55,16 @@ class TakeDeviceScreenCaptureAutomationStep implements TakeScreenCaptureCommand 
         });
         Image screenCaptureImage = imageCreator.createImage(screenCapture, "screen capture");
 
+        optionallySaveScreenCapture(screenCapture);
+        return screenCaptureImage;
+    }
+
+    private void optionallySaveScreenCapture(BufferedImage screenCapture) {
         if (saveScreenCaptures) {
             LocalDateTime now = LocalDateTime.now(clock);
             String format = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH_mm_ss_SSS"));
             Path path = imagesPath.resolve(MessageFormat.format("screen captures\\{0}.png", format));
             saveImageCommand.saveImage(screenCapture, path);
         }
-        return screenCaptureImage;
     }
 }

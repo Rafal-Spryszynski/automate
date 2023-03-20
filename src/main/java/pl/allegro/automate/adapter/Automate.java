@@ -36,7 +36,7 @@ class Automate {
         SleepCommand sleepCommand = registry.get(SleepCommand.class);
 
 //        Password domainPassword = consoleAutomationStep.promptPassword("Domain password: ");
-        Password domainPassword = ImmutablePassword.of("Test this".toCharArray());
+        Password domainPassword = ImmutablePassword.of("#$%^&*()-=_+[]{}\\|;':\",./<>?".toCharArray());
         typeCharsAutomationStep.typeChars(domainPassword);
 
 //        startProcessAutomationStep.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));

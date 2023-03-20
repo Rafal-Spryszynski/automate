@@ -25,7 +25,16 @@ class TypeKeyboardCharsAutomationStep implements TypeCharsAutomationStep {
 
     @Override
     public void typeChars(Password password) {
-        CharSeq.of(password.chars())
+        typeChars(password.chars());
+    }
+
+    @Override
+    public void typeChars(String text) {
+        typeChars(text.toCharArray());
+    }
+
+    private void typeChars(char[] chars) {
+        CharSeq.of(chars)
             .forEach(character -> {
                 int keyCode = KeyEvent.getExtendedKeyCodeForChar(character);
                 if (keyCode == KeyEvent.VK_UNDEFINED) {

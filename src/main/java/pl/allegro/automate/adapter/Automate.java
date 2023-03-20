@@ -10,11 +10,11 @@ import pl.allegro.automate.gui.ScreenLocation;
 import pl.allegro.automate.gui.SendMouseClickCommand;
 import pl.allegro.automate.gui.TypeCharsAutomationStep;
 import pl.allegro.automate.system.console.ConsoleAutomationStep;
-import pl.allegro.automate.system.console.ImmutablePassword;
 import pl.allegro.automate.system.console.Password;
 import pl.allegro.automate.system.process.StartProcessAutomationStep;
 
 import javax.inject.Inject;
+import java.nio.file.Paths;
 import java.time.Duration;
 
 class Automate {
@@ -35,11 +35,9 @@ class Automate {
         SendMouseClickCommand sendMouseClickCommand = registry.get(SendMouseClickCommand.class);
         SleepCommand sleepCommand = registry.get(SleepCommand.class);
 
-//        Password domainPassword = consoleAutomationStep.promptPassword("Domain password: ");
-        Password domainPassword = ImmutablePassword.of("#$%^&*()-=_+[]{}\\|;':\",./<>?".toCharArray());
-        typeCharsAutomationStep.typeChars(domainPassword);
+        Password domainPassword = consoleAutomationStep.promptPassword("Domain password: ");
 
-//        startProcessAutomationStep.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
+        startProcessAutomationStep.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
 
         Image vpnWindow1 = loadImageCommand.loadImage("cisco client window 1.png");
         Image vpnWindow2 = loadImageCommand.loadImage("cisco client window 2.png");
@@ -61,6 +59,10 @@ class Automate {
         sleepCommand.sleep(Duration.ofSeconds(1));
 
         ImageOnScreen passwordWindowOnScreen = findImageOnScreen.findImageOnScreen(passwordWindow1, passwordWindow2);
+
+//        Password domainPassword = ImmutablePassword.of("#$%^&*()-=_+[]{}\\|;':\",./<>?".toCharArray());
+        typeCharsAutomationStep.typeChars(domainPassword);
+        typeCharsAutomationStep.typeChars("\n");
 
         Image okButton = loadImageCommand.loadImage("cisco ok button.png");
 

@@ -6,4 +6,6 @@ import pl.allegro.automate.system.console.Password;
 public interface TypeCharsAutomationStep extends AutomationStep {
 
     void typeChars(Password password);
+
+    void typeChars(String text);
 }

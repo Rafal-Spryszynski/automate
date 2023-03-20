@@ -6,7 +6,6 @@ import pl.allegro.automate.system.console.Password;
 
 import javax.inject.Inject;
 import java.awt.Robot;
-import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 class TypeKeyboardCharsAutomationStep implements TypeCharsAutomationStep {
@@ -24,12 +23,12 @@ class TypeKeyboardCharsAutomationStep implements TypeCharsAutomationStep {
             .forEach(character -> {
                 int keyCode = KeyEvent.getExtendedKeyCodeForChar(character);
                 if (Character.isUpperCase(character)) {
-                    robot.keyPress(InputEvent.SHIFT_DOWN_MASK);
+                    robot.keyPress(KeyEvent.VK_SHIFT);
                 }
                 robot.keyPress(keyCode);
                 robot.keyRelease(keyCode);
                 if (Character.isUpperCase(character)) {
-                    robot.keyRelease(InputEvent.SHIFT_DOWN_MASK);
+                    robot.keyRelease(KeyEvent.VK_SHIFT);
                 }
             });
     }

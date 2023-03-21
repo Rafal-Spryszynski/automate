@@ -26,7 +26,7 @@ import java.time.Duration;
 )
 interface AutomateComponent {
 
-    Automate automate();
+    TurnOnVpnAutomation turnOnVpnAutomation();
 
     StartChromeAutomation startChromeAutomation();
 

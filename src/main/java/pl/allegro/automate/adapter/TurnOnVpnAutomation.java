@@ -17,16 +17,16 @@ import javax.inject.Inject;
 import java.nio.file.Paths;
 import java.time.Duration;
 
-class Automate {
+class TurnOnVpnAutomation {
 
     private final AutomationStepsRegistry registry;
 
     @Inject
-    Automate(AutomationStepsRegistry registry) {
+    TurnOnVpnAutomation(AutomationStepsRegistry registry) {
         this.registry = registry;
     }
 
-    void runAutomation() {
+    void turnOnVpn() {
         ConsoleAutomationStep consoleAutomationStep = registry.get(ConsoleAutomationStep.class);
         TypeCharsAutomationStep typeCharsAutomationStep = registry.get(TypeCharsAutomationStep.class);
         StartProcessAutomationStep startProcessAutomationStep = registry.get(StartProcessAutomationStep.class);

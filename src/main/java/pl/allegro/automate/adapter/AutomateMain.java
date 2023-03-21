@@ -19,8 +19,8 @@ class AutomateMain {
             .awtGuiComponent(awtGuiComponent)
             .defaultSleepDuration(Duration.ofMillis(200))
             .build();
-        Automate automate = automateComponent.automate();
-//        automate.runAutomation();
+        TurnOnVpnAutomation turnOnVpnAutomation = automateComponent.turnOnVpnAutomation();
+//        turnOnVpnAutomation.turnOnVpn();
         StartChromeAutomation startChromeAutomation = automateComponent.startChromeAutomation();
 //        startChromeAutomation.startChrome();
         StartFirefoxAutomation startFirefoxAutomation = automateComponent.startFirefoxAutomation();

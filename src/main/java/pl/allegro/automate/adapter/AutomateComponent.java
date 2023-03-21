@@ -28,6 +28,10 @@ interface AutomateComponent {
 
     Automate automate();
 
+    StartChromeAutomation startChromeAutomation();
+
+    StartFirefoxAutomation startFirefoxAutomation();
+
     @Component.Builder
     interface Builder {
 

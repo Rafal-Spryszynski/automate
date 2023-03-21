@@ -15,11 +15,15 @@ class AutomateMain {
             .autoDelay(Duration.ofMillis(100))
             .build();
 
-        Automate automate = DaggerAutomateComponent.builder()
+        AutomateComponent automateComponent = DaggerAutomateComponent.builder()
             .awtGuiComponent(awtGuiComponent)
             .defaultSleepDuration(Duration.ofMillis(200))
-            .build()
-            .automate();
-        automate.runAutomation();
+            .build();
+        Automate automate = automateComponent.automate();
+//        automate.runAutomation();
+        StartChromeAutomation startChromeAutomation = automateComponent.startChromeAutomation();
+//        startChromeAutomation.startChrome();
+        StartFirefoxAutomation startFirefoxAutomation = automateComponent.startFirefoxAutomation();
+        startFirefoxAutomation.startFirefox();
     }
 }

@@ -39,13 +39,13 @@ class Automate {
 
         startProcessAutomationStep.startProcess(Paths.get("C:\\Program Files (x86)\\Cisco\\Cisco Secure Client\\UI\\csc_ui.exe"));
 
-        Image vpnWindow1 = loadImageCommand.loadImage("cisco client window 1.png");
-        Image vpnWindow2 = loadImageCommand.loadImage("cisco client window 2.png");
+        Image vpnWindow1 = loadImageCommand.loadImage("vpn\\cisco client window 1.png");
+        Image vpnWindow2 = loadImageCommand.loadImage("vpn\\cisco client window 2.png");
 
         ImageOnScreen vpnWindowOnScreen = findImageOnScreen.findImageOnScreen(vpnWindow1, vpnWindow2);
 
-        Image connectButton1 = loadImageCommand.loadImage("cisco connect button 1.png");
-        Image connectButton2 = loadImageCommand.loadImage("cisco connect button 2.png");
+        Image connectButton1 = loadImageCommand.loadImage("vpn\\cisco connect button 1.png");
+        Image connectButton2 = loadImageCommand.loadImage("vpn\\cisco connect button 2.png");
 
         ImageOnScreen connectButtonOnScreen = findImageOnScreen.findImageOnScreen(vpnWindowOnScreen, connectButton1, connectButton2);
 
@@ -53,8 +53,8 @@ class Automate {
         Image connectButton = connectButtonOnScreen.image();
         sendMouseClickCommand.sendMouseClick(connectButtonLocation.withOffset(connectButton.center()));
 
-        Image passwordWindow1 = loadImageCommand.loadImage("cisco password window 1.png");
-        Image passwordWindow2 = loadImageCommand.loadImage("cisco password window 2.png");
+        Image passwordWindow1 = loadImageCommand.loadImage("vpn\\cisco password window 1.png");
+        Image passwordWindow2 = loadImageCommand.loadImage("vpn\\cisco password window 2.png");
 
         sleepCommand.sleep(Duration.ofSeconds(1));
 
@@ -64,7 +64,7 @@ class Automate {
         typeCharsAutomationStep.typeChars(domainPassword);
         typeCharsAutomationStep.typeChars("\n");
 
-        Image okButton = loadImageCommand.loadImage("cisco ok button.png");
+        Image okButton = loadImageCommand.loadImage("vpn\\cisco ok button.png");
 
         ImageOnScreen okButtonOnScreen = findImageOnScreen.findImageOnScreen(passwordWindowOnScreen, okButton);
 

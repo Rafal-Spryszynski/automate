@@ -14,16 +14,11 @@ class AutomateMain {
             .saveScreenCaptures(true)
             .autoDelay(Duration.ofMillis(100))
             .build();
-
         AutomateComponent automateComponent = DaggerAutomateComponent.builder()
             .awtGuiComponent(awtGuiComponent)
             .defaultSleepDuration(Duration.ofMillis(200))
             .build();
-        TurnOnVpnAutomation turnOnVpnAutomation = automateComponent.turnOnVpnAutomation();
-//        turnOnVpnAutomation.turnOnVpn();
-        StartChromeAutomation startChromeAutomation = automateComponent.startChromeAutomation();
-//        startChromeAutomation.startChrome();
-        StartFirefoxAutomation startFirefoxAutomation = automateComponent.startFirefoxAutomation();
-        startFirefoxAutomation.startFirefox();
+        Automate automate = automateComponent.automate();
+//        automate.runAutomation();
     }
 }

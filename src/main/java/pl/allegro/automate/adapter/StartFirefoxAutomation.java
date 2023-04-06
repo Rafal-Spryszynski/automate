@@ -37,7 +37,7 @@ class StartFirefoxAutomation {
         startProcessAutomationStep.startProcess(Paths.get("C:\\Program Files\\Mozilla Firefox\\firefox.exe"));
 
         Image bitwardenPlugin = loadImageCommand.loadImage("firefox\\bitwarden plugin.png");
-        Image bitwardenIsOpen = loadImageCommand.loadImage("firefox\\bitwarden open.png");
+        Image bitwardenIsOpen = loadImageCommand.loadImage("firefox\\bitwarden password.png");
 
         ImageOnScreen chromeBitwardenOnScreen = findImageOnScreen.findImageOnScreen(bitwardenPlugin);
 

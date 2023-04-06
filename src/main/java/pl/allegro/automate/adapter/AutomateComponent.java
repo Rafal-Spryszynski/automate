@@ -26,11 +26,7 @@ import java.time.Duration;
 )
 interface AutomateComponent {
 
-    TurnOnVpnAutomation turnOnVpnAutomation();
-
-    StartChromeAutomation startChromeAutomation();
-
-    StartFirefoxAutomation startFirefoxAutomation();
+    Automate automate();
 
     @Component.Builder
     interface Builder {

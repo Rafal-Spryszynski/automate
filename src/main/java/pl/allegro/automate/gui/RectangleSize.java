@@ -3,7 +3,6 @@ package pl.allegro.automate.gui;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Parameter;
 
-@Value.Style(overshadowImplementation = true)
 @Value.Immutable
 public interface RectangleSize {
 

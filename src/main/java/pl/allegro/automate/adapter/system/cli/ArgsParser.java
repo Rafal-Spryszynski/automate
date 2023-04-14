@@ -34,6 +34,9 @@ public class ArgsParser {
         Optional.ofNullable(commandLine.getOptionValue("imagesPath"))
             .map(Paths::get)
             .ifPresent(paramsBuilder::imagesPath);
+        if (commandLine.hasOption("saveScreenCaptures")) {
+            paramsBuilder.saveScreenCaptures(true);
+        }
         return paramsBuilder.build();
     }
 }

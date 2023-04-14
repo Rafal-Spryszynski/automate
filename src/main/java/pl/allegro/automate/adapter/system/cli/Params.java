@@ -13,4 +13,9 @@ public interface Params {
     default Path imagesPath() {
         return Paths.get("C:\\Users\\rafal.spryszynski\\Desktop\\automate");
     }
+
+    @Default
+    default boolean saveScreenCaptures() {
+        return false;
+    }
 }

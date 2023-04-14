@@ -25,6 +25,15 @@ interface CommandLineModule {
 
     @Provides
     @IntoSet
+    static Option saveScreenCaptures() {
+        return Option.builder()
+            .longOpt("saveScreenCaptures")
+            .desc("Save screen captures to the \"screen captures\" directory. Default false")
+            .build();
+    }
+
+    @Provides
+    @IntoSet
     static Option help() {
         return Option.builder()
             .longOpt("help")

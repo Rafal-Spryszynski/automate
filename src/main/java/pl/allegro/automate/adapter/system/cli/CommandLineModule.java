@@ -8,17 +8,26 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Set;
+
+import static java.util.stream.Collectors.toUnmodifiableSet;
 
 @Module
 interface CommandLineModule {
 
     @Provides
     @IntoSet
-    static Option help() {
-        return Option.builder()
+    static CommandLineArg<?> help() {
+        Option option = Option.builder()
             .longOpt("help")
             .desc("Prints all available options")
+            .build();
+        return ImmutableCommandLineArgNoValue.<Boolean>builder()
+            .option(option)
+            .setter(builder -> builder::displayHelp)
             .build();
     }
 
@@ -29,41 +38,67 @@ interface CommandLineModule {
 
     @Provides
     @IntoSet
-    static Option imagesPath(Params params) {
-        return Option.builder()
+    static CommandLineArg<?> imagesPath(Params params) {
+        Option option = Option.builder()
             .longOpt("imagesPath")
             .hasArg()
             .desc("Images path location. Default: " + params.imagesPath())
             .build();
-    }
-
-    @Provides
-    @IntoSet
-    static Option saveScreenCaptures(Params params) {
-        return Option.builder()
-            .longOpt("saveScreenCaptures")
-            .desc("Save screen captures to the \"screen captures\" directory. Default: " + params.saveScreenCaptures())
+        return ImmutableCommandLineArgWithValue.<Path>builder()
+            .option(option)
+            .mapper(Paths::get)
+            .setter(builder -> builder::imagesPath)
             .build();
     }
 
     @Provides
     @IntoSet
-    static Option autoDelay(Params params) {
-        return Option.builder()
+    static CommandLineArg<?> saveScreenCaptures(Params params) {
+        Option option = Option.builder()
+            .longOpt("saveScreenCaptures")
+            .desc("Save screen captures to the \"screen captures\" directory. Default: " + params.saveScreenCaptures())
+            .build();
+        return ImmutableCommandLineArgNoValue.<Boolean>builder()
+            .option(option)
+            .setter(builder -> builder::saveScreenCaptures)
+            .build();
+    }
+
+    @Provides
+    @IntoSet
+    static CommandLineArg<?> autoDelay(Params params) {
+        Option option = Option.builder()
             .longOpt("autoDelay")
             .hasArg()
             .desc("Auto delay duration. Default: " + params.autoDelay())
             .build();
+        return ImmutableCommandLineArgWithValue.<Duration>builder()
+            .option(option)
+            .mapper(Duration::parse)
+            .setter(builder -> builder::autoDelay)
+            .build();
     }
 
     @Provides
     @IntoSet
-    static Option defaultSleepDuration(Params params) {
-        return Option.builder()
+    static CommandLineArg<?> defaultSleepDuration(Params params) {
+        Option option = Option.builder()
             .longOpt("defaultSleepDuration")
             .hasArg()
             .desc("Default sleep duration. Default: " + params.defaultSleepDuration())
             .build();
+        return ImmutableCommandLineArgWithValue.<Duration>builder()
+            .option(option)
+            .mapper(Duration::parse)
+            .setter(builder -> builder::defaultSleepDuration)
+            .build();
+    }
+
+    @Provides
+    static Set<Option> optionsSet(Set<CommandLineArg<?>> commandLineArgs) {
+        return commandLineArgs.stream()
+            .map(CommandLineArg::option)
+            .collect(toUnmodifiableSet());
     }
 
     @Provides

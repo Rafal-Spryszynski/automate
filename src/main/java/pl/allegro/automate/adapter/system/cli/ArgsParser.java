@@ -8,6 +8,7 @@ import org.apache.commons.cli.Options;
 
 import javax.inject.Inject;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Optional;
 
 public class ArgsParser {
@@ -36,6 +37,9 @@ public class ArgsParser {
         if (commandLine.hasOption("saveScreenCaptures")) {
             paramsBuilder.saveScreenCaptures(true);
         }
+        Optional.ofNullable(commandLine.getOptionValue("autoDelay"))
+            .map(Duration::parse)
+            .ifPresent(paramsBuilder::autoDelay);
         return paramsBuilder.build();
     }
 

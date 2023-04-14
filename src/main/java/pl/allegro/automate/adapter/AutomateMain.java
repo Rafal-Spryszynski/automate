@@ -23,7 +23,7 @@ class AutomateMain {
         AwtGuiComponent awtGuiComponent = DaggerAwtGuiComponent.builder()
             .imagesPath(params.imagesPath())
             .saveScreenCaptures(params.saveScreenCaptures())
-            .autoDelay(Duration.ofMillis(100))
+            .autoDelay(params.autoDelay())
             .build();
         AutomateComponent automateComponent = DaggerAutomateComponent.builder()
             .awtGuiComponent(awtGuiComponent)

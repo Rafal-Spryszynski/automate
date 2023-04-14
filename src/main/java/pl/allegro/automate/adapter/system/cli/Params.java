@@ -5,9 +5,15 @@ import org.immutables.value.Value.Default;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
 
 @Value.Immutable
 public interface Params {
+
+    @Default
+    default boolean displayHelp() {
+        return false;
+    }
 
     @Default
     default Path imagesPath() {
@@ -20,7 +26,7 @@ public interface Params {
     }
 
     @Default
-    default boolean displayHelp() {
-        return false;
+    default Duration autoDelay() {
+        return Duration.ofMillis(100);
     }
 }

@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Duration;
 
-@Value.Immutable
+@Value.Immutable(singleton = true)
 public interface Params {
 
     @Default
@@ -28,5 +28,10 @@ public interface Params {
     @Default
     default Duration autoDelay() {
         return Duration.ofMillis(100);
+    }
+
+    @Default
+    default Duration defaultSleepDuration() {
+        return Duration.ofMillis(200);
     }
 }

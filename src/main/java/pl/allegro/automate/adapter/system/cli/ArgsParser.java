@@ -40,6 +40,9 @@ public class ArgsParser {
         Optional.ofNullable(commandLine.getOptionValue("autoDelay"))
             .map(Duration::parse)
             .ifPresent(paramsBuilder::autoDelay);
+        Optional.ofNullable(commandLine.getOptionValue("defaultSleepDuration"))
+            .map(Duration::parse)
+            .ifPresent(paramsBuilder::defaultSleepDuration);
         return paramsBuilder.build();
     }
 

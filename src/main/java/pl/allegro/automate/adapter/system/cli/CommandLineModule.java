@@ -24,7 +24,7 @@ interface CommandLineModule {
 
     @Provides
     static Params defaultParams() {
-        return ImmutableParams.builder().build();
+        return ImmutableParams.of();
     }
 
     @Provides
@@ -53,6 +53,16 @@ interface CommandLineModule {
             .longOpt("autoDelay")
             .hasArg()
             .desc("Auto delay duration. Default: " + params.autoDelay())
+            .build();
+    }
+
+    @Provides
+    @IntoSet
+    static Option defaultSleepDuration(Params params) {
+        return Option.builder()
+            .longOpt("defaultSleepDuration")
+            .hasArg()
+            .desc("Default sleep duration. Default: " + params.defaultSleepDuration())
             .build();
     }
 

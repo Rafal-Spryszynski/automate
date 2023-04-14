@@ -6,8 +6,6 @@ import pl.allegro.automate.adapter.system.cli.ArgsParser;
 import pl.allegro.automate.adapter.system.cli.DaggerCommandLineComponent;
 import pl.allegro.automate.adapter.system.cli.Params;
 
-import java.time.Duration;
-
 class AutomateMain {
 
     public static void main(String[] args) {
@@ -27,7 +25,7 @@ class AutomateMain {
             .build();
         AutomateComponent automateComponent = DaggerAutomateComponent.builder()
             .awtGuiComponent(awtGuiComponent)
-            .defaultSleepDuration(Duration.ofMillis(200))
+            .defaultSleepDuration(params.defaultSleepDuration())
             .build();
         Automate automate = automateComponent.automate();
         automate.runAutomation();

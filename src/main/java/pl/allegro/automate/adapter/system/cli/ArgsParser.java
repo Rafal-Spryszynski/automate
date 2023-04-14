@@ -28,8 +28,7 @@ public class ArgsParser {
         ImmutableParams.Builder paramsBuilder = ImmutableParams.builder();
 
         if (commandLine.hasOption("help")) {
-            HelpFormatter helpFormatter = new HelpFormatter();
-            helpFormatter.printHelp("java -jar target/automate-1.0-SNAPSHOT.jar", options);
+            paramsBuilder.displayHelp(true);
         }
         Optional.ofNullable(commandLine.getOptionValue("imagesPath"))
             .map(Paths::get)
@@ -38,5 +37,10 @@ public class ArgsParser {
             paramsBuilder.saveScreenCaptures(true);
         }
         return paramsBuilder.build();
+    }
+
+    public void displayHelp() {
+        HelpFormatter helpFormatter = new HelpFormatter();
+        helpFormatter.printHelp("java -jar target/automate-1.0-SNAPSHOT.jar", options);
     }
 }

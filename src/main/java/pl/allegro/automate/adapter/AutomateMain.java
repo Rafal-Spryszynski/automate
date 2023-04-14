@@ -16,6 +16,10 @@ class AutomateMain {
             .argsParser();
         Params params = argsParser.parseArgs();
 
+        if (params.displayHelp()) {
+            argsParser.displayHelp();
+            return;
+        }
         AwtGuiComponent awtGuiComponent = DaggerAwtGuiComponent.builder()
             .imagesPath(params.imagesPath())
             .saveScreenCaptures(params.saveScreenCaptures())
@@ -26,6 +30,6 @@ class AutomateMain {
             .defaultSleepDuration(Duration.ofMillis(200))
             .build();
         Automate automate = automateComponent.automate();
-//        automate.runAutomation();
+        automate.runAutomation();
     }
 }

@@ -18,4 +18,9 @@ public interface Params {
     default boolean saveScreenCaptures() {
         return false;
     }
+
+    @Default
+    default boolean displayHelp() {
+        return false;
+    }
 }

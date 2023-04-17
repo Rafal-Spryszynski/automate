@@ -26,8 +26,11 @@ class AutomateMain {
         AutomateComponent automateComponent = DaggerAutomateComponent.builder()
             .awtGuiComponent(awtGuiComponent)
             .defaultSleepDuration(params.defaultSleepDuration())
+            .automationFlowsPath(params.imagesPath())
             .build();
         Automate automate = automateComponent.automate();
-        automate.runAutomation();
+//        automate.runAutomation();
+        pl.allegro.automate.Automate automate2 = automateComponent.automate2();
+        automate2.runAutomation();
     }
 }

@@ -10,6 +10,7 @@ import pl.allegro.automate.adapter.system.process.SystemModule;
 import pl.allegro.automate.flow.FlowModule;
 import pl.allegro.automate.gui.GuiModule;
 
+import java.nio.file.Path;
 import java.time.Duration;
 
 @Component(
@@ -28,6 +29,8 @@ interface AutomateComponent {
 
     Automate automate();
 
+    pl.allegro.automate.Automate automate2();
+
     @Component.Builder
     interface Builder {
 
@@ -35,6 +38,9 @@ interface AutomateComponent {
 
         @BindsInstance
         Builder defaultSleepDuration(Duration duration);
+
+        @BindsInstance
+        Builder automationFlowsPath(Path automationFlowsPath);
 
         AutomateComponent build();
     }

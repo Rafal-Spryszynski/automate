@@ -6,6 +6,7 @@ import pl.allegro.automate.system.process.StartProcessAutomationStep;
 
 import javax.inject.Inject;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 class StartSystemProcessAutomationStep implements StartProcessAutomationStep {
 
@@ -14,8 +15,8 @@ class StartSystemProcessAutomationStep implements StartProcessAutomationStep {
 
     @Override
     public void execute(Exchange exchange) {
-        Path path = exchange.getSingleParam(Path.class);
-        startProcess(path);
+        String path = exchange.getSingleParam();
+        startProcess(Paths.get(path));
     }
 
     @Override

@@ -2,8 +2,6 @@ package pl.allegro.automate;
 
 import io.vavr.control.Option;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,35 +19,37 @@ public class Exchange {
         }
     }
 
-    public <T> T getSingleParam(Class<T> tClass) {
+    public <T> T getSingleParam() {
         if (inputs.size() != 1) {
             throw new RuntimeException("Expected 1 parameter got " + inputs.size() + " " + inputs);
         }
-        return getNextParam(tClass);
+        return getNextParam();
     }
 
-    public <T> T getNextParam(Class<T> tClass) {
-        if (tClass.equals(Path.class)) {
-            return (T) Paths.get((String) inputs.get(0));
-        }
+    public <T> T getNextParam() {
         return (T) inputs.remove(0);
     }
 
-    public <T> Option<T> getLastOptionalParam(Class<T> tClass) {
+    public <T> Option<T> getLastOptionalParam() {
         if (inputs.size() != 1) {
             throw new RuntimeException("Expected last parameter got " + inputs);
         }
-        return getNextOptionalParam(tClass);
+        return getNextOptionalParam();
     }
 
-    public <T> Option<T> getNextOptionalParam(Class<T> tClass) {
+    public <T> Option<T> getNextOptionalParam() {
         return Option.when(!inputs.isEmpty(), () -> inputs.remove(0))
-            .map(tClass::cast);
+            .map(a -> (T) a);
     }
 
     public <T> io.vavr.collection.List<T> getAllParams(Class<T> tClass) {
         return inputs.stream()
             .map(tClass::cast)
             .collect(io.vavr.collection.List.collector());
+    }
+
+    @Override
+    public String toString() {
+        return inputs.toString();
     }
 }

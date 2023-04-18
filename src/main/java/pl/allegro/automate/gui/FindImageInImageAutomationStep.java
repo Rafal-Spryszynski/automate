@@ -19,11 +19,11 @@ public class FindImageInImageAutomationStep implements AutomationStep {
 
     @Override
     public void execute(Exchange exchange) {
-        Image image = exchange.getNextParam(Image.class);
-        Image imageToFind = exchange.getNextParam(Image.class);
-        ScreenLocation startLocation = exchange.getNextOptionalParam(ScreenLocation.class)
+        Image image = exchange.getNextParam();
+        Image imageToFind = exchange.getNextParam();
+        ScreenLocation startLocation = exchange.<ScreenLocation>getNextOptionalParam()
             .getOrElse(() -> ImmutableScreenLocation.of(0, 0));
-        RectangleSize size = exchange.getLastOptionalParam(RectangleSize.class)
+        RectangleSize size = exchange.<RectangleSize>getLastOptionalParam()
             .getOrElse(image::size);
         findImageInImage(image, imageToFind, startLocation, size);
     }

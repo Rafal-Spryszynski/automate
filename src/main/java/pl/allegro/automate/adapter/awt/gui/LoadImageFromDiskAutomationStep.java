@@ -25,7 +25,7 @@ class LoadImageFromDiskAutomationStep implements LoadImageAutomationStep {
 
     @Override
     public void execute(Exchange exchange) {
-        String imageFileName = exchange.getSingleParam(String.class);
+        String imageFileName = exchange.getSingleParam();
         loadImage(imageFileName);
     }
 

@@ -19,7 +19,7 @@ class SendDeviceMouseClickAutomationStep implements SendMouseClickAutomationStep
 
     @Override
     public void execute(Exchange exchange) {
-        ScreenLocation screenLocation = exchange.getSingleParam(ScreenLocation.class);
+        ScreenLocation screenLocation = exchange.getSingleParam();
         sendMouseClick(screenLocation);
     }
 

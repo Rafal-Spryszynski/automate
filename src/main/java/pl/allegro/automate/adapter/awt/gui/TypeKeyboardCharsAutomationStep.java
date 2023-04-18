@@ -26,7 +26,7 @@ class TypeKeyboardCharsAutomationStep implements TypeCharsAutomationStep {
 
     @Override
     public void execute(Exchange exchange) {
-        Object param = exchange.getSingleParam(Object.class);
+        Object param = exchange.getSingleParam();
 
         if (param instanceof Password) {
             typeChars((Password) param);

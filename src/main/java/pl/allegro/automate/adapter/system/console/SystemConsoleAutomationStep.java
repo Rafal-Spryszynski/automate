@@ -14,7 +14,7 @@ class SystemConsoleAutomationStep implements ConsoleAutomationStep {
 
     @Override
     public void execute(Exchange exchange) {
-        String prompt = exchange.getSingleParam(String.class);
+        String prompt = exchange.getSingleParam();
         promptPassword(prompt);
     }
 

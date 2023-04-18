@@ -28,6 +28,18 @@ interface AutomateModule {
             );
     }
 
+    @Provides
+    static Map<AutomationFlow.Step.Code, AutomationStep> allAutomationSteps(
+        java.util.Map<AutomationFlow.Step.Code, AutomationStep> automationSteps,
+        LoggingAutomationStepFactory loggingAutomationStepFactory
+    ) {
+        return HashMap.ofAll(automationSteps)
+            .map((code, automationStep) ->
+                decorateWithLogging(loggingAutomationStepFactory, AutomationStep.class, automationStep)
+                    .map1(aClass -> code)
+            );
+    }
+
     private static Tuple2<Class<? extends AutomationStep>, AutomationStep> decorateWithLogging(
         LoggingAutomationStepFactory loggingAutomationStepFactory,
         Class<? extends AutomationStep> automationStepKey,
@@ -38,12 +50,5 @@ interface AutomateModule {
         }
         AutomationStep automationStepProxy = loggingAutomationStepFactory.decorate(automationStepKey, automationStep);
         return Tuple.of(automationStepKey, automationStepProxy);
-    }
-
-    @Provides
-    static Map<AutomationFlow.Step.Code, AutomationStep> allAutomationSteps(
-        java.util.Map<AutomationFlow.Step.Code, AutomationStep> automationSteps
-    ) {
-        return HashMap.ofAll(automationSteps);
     }
 }

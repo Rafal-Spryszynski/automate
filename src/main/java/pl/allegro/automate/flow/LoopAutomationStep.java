@@ -21,10 +21,10 @@ public class LoopAutomationStep implements AutomationStep {
 
     @Override
     public void execute(Exchange exchange) {
-        Supplier<?> automationSteps = exchange.getNextParam(Supplier.class);
-        Duration sleepDuration = exchange.getLastOptionalParam(Duration.class)
+        Supplier<Option<Object>> automationSteps = exchange.getNextParam();
+        Duration sleepDuration = exchange.<Duration>getLastOptionalParam()
             .getOrElse(defaultSleepDuration);
-        loop((Supplier<Option<Object>>) automationSteps, sleepDuration);
+        loop(automationSteps, sleepDuration);
     }
 
     public <T> T loop(Supplier<Option<T>> automationSteps) {

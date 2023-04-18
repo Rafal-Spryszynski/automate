@@ -14,7 +14,7 @@ class ThreadSleepAutomationStep implements SleepAutomationStep {
 
     @Override
     public void execute(Exchange exchange) {
-        Duration duration = exchange.getSingleParam(Duration.class);
+        Duration duration = exchange.getSingleParam();
         sleep(duration);
     }
 

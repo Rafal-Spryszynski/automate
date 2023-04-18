@@ -19,14 +19,14 @@ class AutomateMain {
             return;
         }
         AwtGuiComponent awtGuiComponent = DaggerAwtGuiComponent.builder()
-            .imagesPath(params.imagesPath())
+            .imagesPath(params.filesPath())
             .saveScreenCaptures(params.saveScreenCaptures())
             .autoDelay(params.autoDelay())
             .build();
         AutomateComponent automateComponent = DaggerAutomateComponent.builder()
             .awtGuiComponent(awtGuiComponent)
             .defaultSleepDuration(params.defaultSleepDuration())
-            .automationFlowsPath(params.imagesPath())
+            .automationFlowsPath(params.filesPath())
             .build();
         Automate automate = automateComponent.automate();
 //        automate.runAutomation();

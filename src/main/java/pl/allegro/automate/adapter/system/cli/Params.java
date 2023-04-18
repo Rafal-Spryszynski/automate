@@ -16,7 +16,7 @@ public interface Params {
     }
 
     @Default
-    default Path imagesPath() {
+    default Path filesPath() {
         return SystemUtils.getUserDir().toPath();
     }
 

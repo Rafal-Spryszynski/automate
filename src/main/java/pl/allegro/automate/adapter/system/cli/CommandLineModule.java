@@ -40,14 +40,14 @@ interface CommandLineModule {
     @IntoSet
     static CommandLineArg<?> imagesPath(Params params) {
         Option option = Option.builder()
-            .longOpt("imagesPath")
+            .longOpt("filesPath")
             .hasArg()
-            .desc("Images path location. Default: " + params.imagesPath())
+            .desc("Files path location. Default: " + params.filesPath())
             .build();
         return ImmutableCommandLineArgWithValue.<Path>builder()
             .option(option)
             .mapper(Paths::get)
-            .setter(builder -> builder::imagesPath)
+            .setter(builder -> builder::filesPath)
             .build();
     }
 

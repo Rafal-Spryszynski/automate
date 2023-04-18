@@ -2,7 +2,10 @@ package pl.allegro.automate.adapter;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import pl.allegro.automate.Automate;
 import pl.allegro.automate.adapter.awt.gui.AwtGuiComponent;
+import pl.allegro.automate.adapter.flow.file.reader.AutomationFlowFileReader;
+import pl.allegro.automate.adapter.json.jackson.JacksonJsonModule;
 import pl.allegro.automate.adapter.logging.metrics.LoggingMetricsModule;
 import pl.allegro.automate.adapter.system.console.ConsoleModule;
 import pl.allegro.automate.adapter.system.flow.SystemFlowModule;
@@ -18,6 +21,7 @@ import java.time.Duration;
         AutomateModule.class,
         FlowModule.class,
         GuiModule.class,
+        JacksonJsonModule.class,
         LoggingMetricsModule.class,
         ConsoleModule.class,
         SystemFlowModule.class,
@@ -27,9 +31,9 @@ import java.time.Duration;
 )
 interface AutomateComponent {
 
-    Automate automate();
+    AutomationFlowFileReader automationFlowFileReader();
 
-    pl.allegro.automate.Automate automate2();
+    Automate automate();
 
     @Component.Builder
     interface Builder {
@@ -40,7 +44,7 @@ interface AutomateComponent {
         Builder defaultSleepDuration(Duration duration);
 
         @BindsInstance
-        Builder automationFlowsPath(Path automationFlowsPath);
+        Builder filesPath(Path filesPath);
 
         AutomateComponent build();
     }

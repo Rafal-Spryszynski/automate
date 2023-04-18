@@ -1,7 +1,10 @@
 package pl.allegro.automate.adapter;
 
+import pl.allegro.automate.Automate;
+import pl.allegro.automate.AutomationFlow;
 import pl.allegro.automate.adapter.awt.gui.AwtGuiComponent;
 import pl.allegro.automate.adapter.awt.gui.DaggerAwtGuiComponent;
+import pl.allegro.automate.adapter.flow.file.reader.AutomationFlowFileReader;
 import pl.allegro.automate.adapter.system.cli.ArgsParser;
 import pl.allegro.automate.adapter.system.cli.DaggerCommandLineComponent;
 import pl.allegro.automate.adapter.system.cli.Params;
@@ -26,11 +29,11 @@ class AutomateMain {
         AutomateComponent automateComponent = DaggerAutomateComponent.builder()
             .awtGuiComponent(awtGuiComponent)
             .defaultSleepDuration(params.defaultSleepDuration())
-            .automationFlowsPath(params.filesPath())
+            .filesPath(params.filesPath())
             .build();
+        AutomationFlowFileReader automationFlowFileReader = automateComponent.automationFlowFileReader();
+        AutomationFlow automationFlow = automationFlowFileReader.readAutomationFlow();
         Automate automate = automateComponent.automate();
-//        automate.runAutomation();
-        pl.allegro.automate.Automate automate2 = automateComponent.automate2();
-        automate2.runAutomation();
+        automate.runAutomation(automationFlow);
     }
 }

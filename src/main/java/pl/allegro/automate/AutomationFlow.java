@@ -7,7 +7,7 @@ import java.util.List;
 
 @JsonDeserialize(as = ImmutableAutomationFlow.class)
 @Value.Immutable
-interface AutomationFlow {
+public interface AutomationFlow {
 
     List<Step> flow();
 

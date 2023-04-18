@@ -1,5 +1,6 @@
 package pl.allegro.automate.adapter.system.console;
 
+import pl.allegro.automate.Exchange;
 import pl.allegro.automate.system.console.ConsoleAutomationStep;
 import pl.allegro.automate.system.console.ImmutablePassword;
 import pl.allegro.automate.system.console.Password;
@@ -10,6 +11,12 @@ class SystemConsoleAutomationStep implements ConsoleAutomationStep {
 
     @Inject
     SystemConsoleAutomationStep() {}
+
+    @Override
+    public void execute(Exchange exchange) {
+        String prompt = exchange.getSingleParam(String.class);
+        promptPassword(prompt);
+    }
 
     @Override
     public Password promptPassword(String prompt) {

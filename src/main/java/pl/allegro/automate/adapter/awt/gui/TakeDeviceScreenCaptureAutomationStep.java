@@ -1,7 +1,8 @@
 package pl.allegro.automate.adapter.awt.gui;
 
+import pl.allegro.automate.Exchange;
 import pl.allegro.automate.gui.Image;
-import pl.allegro.automate.gui.TakeScreenCaptureCommand;
+import pl.allegro.automate.gui.TakeScreenCaptureAutomationStep;
 import pl.allegro.automate.metrics.Metrics;
 
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ import java.time.Clock;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-class TakeDeviceScreenCaptureAutomationStep implements TakeScreenCaptureCommand {
+class TakeDeviceScreenCaptureAutomationStep implements TakeScreenCaptureAutomationStep {
 
     private final Robot robot;
     private final Metrics metrics;
@@ -44,6 +45,12 @@ class TakeDeviceScreenCaptureAutomationStep implements TakeScreenCaptureCommand 
         this.saveImageCommand = saveImageCommand;
         this.clock = clock;
         this.imagesPath = imagesPath;
+    }
+
+    @Override
+    public void execute(Exchange exchange) {
+        exchange.expectNoParams();
+        takeScreenCapture();
     }
 
     @Override

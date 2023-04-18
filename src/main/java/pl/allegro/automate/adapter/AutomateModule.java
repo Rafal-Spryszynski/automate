@@ -6,6 +6,7 @@ import io.vavr.Tuple;
 import io.vavr.Tuple2;
 import io.vavr.collection.HashMap;
 import io.vavr.collection.Map;
+import pl.allegro.automate.AutomationFlow;
 import pl.allegro.automate.AutomationStep;
 import pl.allegro.automate.adapter.logging.metrics.LoggingAutomationStepFactory;
 import pl.allegro.automate.gui.GuiAutomationSteps;
@@ -37,5 +38,12 @@ interface AutomateModule {
         }
         AutomationStep automationStepProxy = loggingAutomationStepFactory.decorate(automationStepKey, automationStep);
         return Tuple.of(automationStepKey, automationStepProxy);
+    }
+
+    @Provides
+    static Map<AutomationFlow.Step.Code, AutomationStep> allAutomationSteps(
+        java.util.Map<AutomationFlow.Step.Code, AutomationStep> automationSteps
+    ) {
+        return HashMap.ofAll(automationSteps);
     }
 }

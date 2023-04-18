@@ -6,7 +6,7 @@ import pl.allegro.automate.AutomationStep;
 import pl.allegro.automate.adapter.logging.metrics.LoggingMetricsModule;
 import pl.allegro.automate.adapter.system.time.SystemTimeModule;
 import pl.allegro.automate.gui.GuiAutomationSteps;
-import pl.allegro.automate.gui.TakeScreenCaptureCommand;
+import pl.allegro.automate.gui.TakeScreenCaptureAutomationStep;
 
 import java.nio.file.Path;
 import java.time.Duration;
@@ -19,7 +19,7 @@ import java.util.Map;
 })
 public interface AwtGuiComponent {
 
-    TakeScreenCaptureCommand takeScreenCaptureCommand();
+    TakeScreenCaptureAutomationStep takeScreenCaptureAutomationStep();
 
     @GuiAutomationSteps
     Map<Class<? extends AutomationStep>, AutomationStep> automationSteps();

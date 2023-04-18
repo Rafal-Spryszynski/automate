@@ -8,9 +8,9 @@ import io.vavr.control.Try;
 import pl.allegro.automate.AutomationStep;
 import pl.allegro.automate.AutomationStepKey;
 import pl.allegro.automate.gui.GuiAutomationSteps;
-import pl.allegro.automate.gui.LoadImageCommand;
-import pl.allegro.automate.gui.SendMouseClickCommand;
-import pl.allegro.automate.gui.TakeScreenCaptureCommand;
+import pl.allegro.automate.gui.LoadImageAutomationStep;
+import pl.allegro.automate.gui.SendMouseClickAutomationStep;
+import pl.allegro.automate.gui.TakeScreenCaptureAutomationStep;
 import pl.allegro.automate.gui.TypeCharsAutomationStep;
 
 import java.awt.Robot;
@@ -25,22 +25,22 @@ interface AwtGuiModule {
     Map<Class<? extends AutomationStep>, AutomationStep> guiAutomationSteps(Map<Class<? extends AutomationStep>, AutomationStep> guiAutomationSteps);
 
     @Binds
-    @AutomationStepKey(LoadImageCommand.class)
+    @AutomationStepKey(LoadImageAutomationStep.class)
     @IntoMap
-    AutomationStep bindLoadImageCommand(LoadImageFromDiskCommand command);
+    AutomationStep bindLoadImageAutomationStep(LoadImageFromDiskAutomationStep automationStep);
 
     @Binds
-    TakeScreenCaptureCommand bindTakeScreenCaptureCommand(TakeDeviceScreenCaptureAutomationStep command);
+    TakeScreenCaptureAutomationStep bindTakeScreenCaptureAutomationStep(TakeDeviceScreenCaptureAutomationStep automationStep);
 
     @Binds
-    @AutomationStepKey(TakeScreenCaptureCommand.class)
+    @AutomationStepKey(TakeScreenCaptureAutomationStep.class)
     @IntoMap
-    AutomationStep bindTakeScreenCaptureStep(TakeDeviceScreenCaptureAutomationStep command);
+    AutomationStep bindTakeScreenCaptureStep(TakeDeviceScreenCaptureAutomationStep automationStep);
 
     @Binds
-    @AutomationStepKey(SendMouseClickCommand.class)
+    @AutomationStepKey(SendMouseClickAutomationStep.class)
     @IntoMap
-    AutomationStep bindSendMouseClickCommand(SendDeviceMouseClickAutomationStep command);
+    AutomationStep bindSendMouseClickAutomationStep(SendDeviceMouseClickAutomationStep automationStep);
 
     @Binds
     @AutomationStepKey(TypeCharsAutomationStep.class)

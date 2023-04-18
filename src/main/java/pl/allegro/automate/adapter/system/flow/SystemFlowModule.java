@@ -5,16 +5,16 @@ import dagger.Module;
 import dagger.multibindings.IntoMap;
 import pl.allegro.automate.AutomationStep;
 import pl.allegro.automate.AutomationStepKey;
-import pl.allegro.automate.flow.SleepCommand;
+import pl.allegro.automate.flow.SleepAutomationStep;
 
 @Module
 public interface SystemFlowModule {
 
     @Binds
-    SleepCommand bindSleepCommand(ThreadSleepCommand command);
+    SleepAutomationStep bindSleepAutomationStep(ThreadSleepAutomationStep automationStep);
 
     @Binds
-    @AutomationStepKey(SleepCommand.class)
+    @AutomationStepKey(SleepAutomationStep.class)
     @IntoMap
-    AutomationStep bindSleepAutomationStep(ThreadSleepCommand command);
+    AutomationStep bindAutomationStep(ThreadSleepAutomationStep automationStep);
 }

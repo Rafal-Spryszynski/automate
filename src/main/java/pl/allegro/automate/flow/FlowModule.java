@@ -10,7 +10,7 @@ import pl.allegro.automate.AutomationStepKey;
 public interface FlowModule {
 
     @Binds
-    @AutomationStepKey(LoopCommand.class)
+    @AutomationStepKey(LoopAutomationStep.class)
     @IntoMap
-    AutomationStep bindLoopCommand(LoopCommand command);
+    AutomationStep bindLoopCommand(LoopAutomationStep command);
 }

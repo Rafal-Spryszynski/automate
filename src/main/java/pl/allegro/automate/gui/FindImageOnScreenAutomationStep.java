@@ -4,37 +4,44 @@ import io.vavr.collection.Iterator;
 import io.vavr.collection.List;
 import io.vavr.control.Option;
 import pl.allegro.automate.AutomationStep;
-import pl.allegro.automate.flow.LoopCommand;
+import pl.allegro.automate.Exchange;
+import pl.allegro.automate.flow.LoopAutomationStep;
 
 import javax.inject.Inject;
 
 public class FindImageOnScreenAutomationStep implements AutomationStep {
 
-    private final TakeScreenCaptureCommand takeScreenCaptureCommand;
-    private final FindImageInImageCommand findImageInImageCommand;
-    private final LoopCommand loopCommand;
+    private final TakeScreenCaptureAutomationStep takeScreenCaptureAutomationStep;
+    private final FindImageInImageAutomationStep findImageInImageAutomationStep;
+    private final LoopAutomationStep loopAutomationStep;
 
     @Inject
     FindImageOnScreenAutomationStep(
-        TakeScreenCaptureCommand takeScreenCaptureCommand,
-        FindImageInImageCommand findImageInImageCommand,
-        LoopCommand loopCommand
+        TakeScreenCaptureAutomationStep takeScreenCaptureAutomationStep,
+        FindImageInImageAutomationStep findImageInImageAutomationStep,
+        LoopAutomationStep loopAutomationStep
     ) {
-        this.takeScreenCaptureCommand = takeScreenCaptureCommand;
-        this.findImageInImageCommand = findImageInImageCommand;
-        this.loopCommand = loopCommand;
+        this.takeScreenCaptureAutomationStep = takeScreenCaptureAutomationStep;
+        this.findImageInImageAutomationStep = findImageInImageAutomationStep;
+        this.loopAutomationStep = loopAutomationStep;
+    }
+
+    @Override
+    public void execute(Exchange exchange) {
+        List<Image> images = exchange.getAllParams(Image.class);
+        loopAutomationStep.loop(() -> findImageOnScreen(images));
     }
 
     public ImageOnScreen findImageOnScreen(Image... images) {
         List<Image> imagesList = List.of(images);
-        return loopCommand.loop(() -> findImageOnScreen(imagesList));
+        return loopAutomationStep.loop(() -> findImageOnScreen(imagesList));
     }
 
     private Option<ImageOnScreen> findImageOnScreen(List<Image> imagesList) {
-        Image screenCapture = takeScreenCaptureCommand.takeScreenCapture();
+        Image screenCapture = takeScreenCaptureAutomationStep.takeScreenCapture();
         return imagesList.iterator()
             .map(image ->
-                findImageInImageCommand.findImageInImage(screenCapture, image)
+                findImageInImageAutomationStep.findImageInImage(screenCapture, image)
                     .map(screenLocation -> ImmutableImageOnScreen.builder()
                         .screenCapture(screenCapture)
                         .screenLocation(screenLocation)
@@ -52,7 +59,7 @@ public class FindImageOnScreenAutomationStep implements AutomationStep {
         RectangleSize size = foundImage.image().size();
         return Iterator.of(images)
             .map(image ->
-                findImageInImageCommand.findImageInImage(screenCapture, image, startLocation, size)
+                findImageInImageAutomationStep.findImageInImage(screenCapture, image, startLocation, size)
                     .map(screenLocation -> ImmutableImageOnScreen.builder()
                         .screenCapture(screenCapture)
                         .screenLocation(screenLocation)

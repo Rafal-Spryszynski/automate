@@ -4,6 +4,7 @@ import io.vavr.collection.CharSeq;
 import io.vavr.control.Try;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.allegro.automate.Exchange;
 import pl.allegro.automate.gui.TypeCharsAutomationStep;
 import pl.allegro.automate.system.console.Password;
 
@@ -21,6 +22,19 @@ class TypeKeyboardCharsAutomationStep implements TypeCharsAutomationStep {
     @Inject
     TypeKeyboardCharsAutomationStep(Robot robot) {
         this.robot = robot;
+    }
+
+    @Override
+    public void execute(Exchange exchange) {
+        Object param = exchange.getSingleParam(Object.class);
+
+        if (param instanceof Password) {
+            typeChars((Password) param);
+        } else if (param instanceof String) {
+            typeChars((String) param);
+        } else {
+            throw new RuntimeException("Unsupported parameter " + param);
+        }
     }
 
     @Override

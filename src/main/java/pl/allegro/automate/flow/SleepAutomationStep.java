@@ -4,7 +4,7 @@ import pl.allegro.automate.AutomationStep;
 
 import java.time.Duration;
 
-public interface SleepCommand extends AutomationStep {
+public interface SleepAutomationStep extends AutomationStep {
 
     void sleep(Duration duration);
 }

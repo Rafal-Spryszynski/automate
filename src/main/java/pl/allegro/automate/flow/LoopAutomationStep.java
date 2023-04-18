@@ -2,20 +2,29 @@ package pl.allegro.automate.flow;
 
 import io.vavr.control.Option;
 import pl.allegro.automate.AutomationStep;
+import pl.allegro.automate.Exchange;
 
 import javax.inject.Inject;
 import java.time.Duration;
 import java.util.function.Supplier;
 
-public class LoopCommand implements AutomationStep {
+public class LoopAutomationStep implements AutomationStep {
 
-    private final SleepCommand sleepCommand;
+    private final SleepAutomationStep sleepAutomationStep;
     private final Duration defaultSleepDuration;
 
     @Inject
-    LoopCommand(SleepCommand sleepCommand, Duration defaultSleepDuration) {
-        this.sleepCommand = sleepCommand;
+    LoopAutomationStep(SleepAutomationStep sleepAutomationStep, Duration defaultSleepDuration) {
+        this.sleepAutomationStep = sleepAutomationStep;
         this.defaultSleepDuration = defaultSleepDuration;
+    }
+
+    @Override
+    public void execute(Exchange exchange) {
+        Supplier<?> automationSteps = exchange.getNextParam(Supplier.class);
+        Duration sleepDuration = exchange.getLastOptionalParam(Duration.class)
+            .getOrElse(defaultSleepDuration);
+        loop((Supplier<Option<Object>>) automationSteps, sleepDuration);
     }
 
     public <T> T loop(Supplier<Option<T>> automationSteps) {
@@ -26,7 +35,7 @@ public class LoopCommand implements AutomationStep {
         Option<T> result = automationSteps.get();
 
         while (result.isEmpty()) {
-            sleepCommand.sleep(sleepDuration);
+            sleepAutomationStep.sleep(sleepDuration);
             result = automationSteps.get();
         }
         return result.get();

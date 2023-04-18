@@ -9,13 +9,13 @@ import java.util.List;
 @Value.Immutable
 public interface AutomationFlow {
 
-    List<Step> flow();
+    List<Step> steps();
 
     @JsonDeserialize(as = ImmutableStep.class)
     @Value.Immutable
     interface Step {
 
-        Code step();
+        Code code();
 
         List<Arg> args();
 

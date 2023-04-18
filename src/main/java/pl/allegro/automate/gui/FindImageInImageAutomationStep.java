@@ -5,16 +5,28 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.allegro.automate.AutomationStep;
+import pl.allegro.automate.Exchange;
 
 import javax.inject.Inject;
 import java.lang.invoke.MethodHandles;
 
-public class FindImageInImageCommand implements AutomationStep {
+public class FindImageInImageAutomationStep implements AutomationStep {
 
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Inject
-    FindImageInImageCommand() {}
+    FindImageInImageAutomationStep() {}
+
+    @Override
+    public void execute(Exchange exchange) {
+        Image image = exchange.getNextParam(Image.class);
+        Image imageToFind = exchange.getNextParam(Image.class);
+        ScreenLocation startLocation = exchange.getNextOptionalParam(ScreenLocation.class)
+            .getOrElse(() -> ImmutableScreenLocation.of(0, 0));
+        RectangleSize size = exchange.getLastOptionalParam(RectangleSize.class)
+            .getOrElse(image::size);
+        findImageInImage(image, imageToFind, startLocation, size);
+    }
 
     public Option<ScreenLocation> findImageInImage(Image image, Image imageToFind) {
         return findImageInImage(image, imageToFind, ImmutableScreenLocation.of(0, 0), image.size());

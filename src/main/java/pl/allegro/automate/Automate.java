@@ -1,9 +1,6 @@
 package pl.allegro.automate;
 
-import pl.allegro.automate.system.process.StartProcessAutomationStep;
-
 import javax.inject.Inject;
-import java.nio.file.Paths;
 
 public class Automate {
 
@@ -15,19 +12,18 @@ public class Automate {
     }
 
     public void runAutomation(AutomationFlow automationFlow) {
-        automationFlow.flow()
+        Exchange exchange = new Exchange();
+        automationFlow.steps()
             .forEach(step -> {
-                switch (step.step()) {
-                    case START_PROCESS: {
-                        StartProcessAutomationStep startProcessAutomationStep = registry.get(StartProcessAutomationStep.class);
-                        step.args().forEach(arg -> {
-                            switch (arg.type()) {
-                                case CONST:
-                                    startProcessAutomationStep.startProcess(Paths.get(arg.value()));
-                            }
-                        });
+                AutomationStep automationStep = registry.get(step.code());
+
+                step.args().forEach(arg -> {
+                    switch (arg.type()) {
+                        case CONST:
+                            exchange.addInput(arg.value());
                     }
-                }
+                });
+                automationStep.execute(exchange);
             });
     }
 }

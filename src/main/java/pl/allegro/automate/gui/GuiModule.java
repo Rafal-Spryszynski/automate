@@ -10,9 +10,9 @@ import pl.allegro.automate.AutomationStepKey;
 public interface GuiModule {
 
     @Binds
-    @AutomationStepKey(FindImageInImageCommand.class)
+    @AutomationStepKey(FindImageInImageAutomationStep.class)
     @IntoMap
-    AutomationStep bindFindImageInImageCommand(FindImageInImageCommand command);
+    AutomationStep bindFindImageInImageCommand(FindImageInImageAutomationStep command);
 
     @Binds
     @AutomationStepKey(FindImageOnScreenAutomationStep.class)

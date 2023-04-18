@@ -4,9 +4,9 @@ import pl.allegro.automate.AutomationStepsRegistry;
 import pl.allegro.automate.gui.FindImageOnScreenAutomationStep;
 import pl.allegro.automate.gui.Image;
 import pl.allegro.automate.gui.ImageOnScreen;
-import pl.allegro.automate.gui.LoadImageCommand;
+import pl.allegro.automate.gui.LoadImageAutomationStep;
 import pl.allegro.automate.gui.ScreenLocation;
-import pl.allegro.automate.gui.SendMouseClickCommand;
+import pl.allegro.automate.gui.SendMouseClickAutomationStep;
 import pl.allegro.automate.gui.TypeCharsAutomationStep;
 import pl.allegro.automate.system.console.ConsoleAutomationStep;
 import pl.allegro.automate.system.console.Password;
@@ -27,28 +27,28 @@ class StartChromeAutomation {
     void startChrome() {
         ConsoleAutomationStep consoleAutomationStep = registry.get(ConsoleAutomationStep.class);
         StartProcessAutomationStep startProcessAutomationStep = registry.get(StartProcessAutomationStep.class);
-        LoadImageCommand loadImageCommand = registry.get(LoadImageCommand.class);
+        LoadImageAutomationStep loadImageAutomationStep = registry.get(LoadImageAutomationStep.class);
         FindImageOnScreenAutomationStep findImageOnScreen = registry.get(FindImageOnScreenAutomationStep.class);
-        SendMouseClickCommand sendMouseClickCommand = registry.get(SendMouseClickCommand.class);
+        SendMouseClickAutomationStep sendMouseClickAutomationStep = registry.get(SendMouseClickAutomationStep.class);
         TypeCharsAutomationStep typeCharsAutomationStep = registry.get(TypeCharsAutomationStep.class);
 
         Password passwordManagerPassword = consoleAutomationStep.promptPassword("Password manager password: ");
 
         startProcessAutomationStep.startProcess(Paths.get("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"));
 
-        Image bitwardenPlugin = loadImageCommand.loadImage("chrome\\bitwarden plugin.png");
-        Image bitwardenIsOpen = loadImageCommand.loadImage("chrome\\bitwarden open.png");
+        Image bitwardenPlugin = loadImageAutomationStep.loadImage("chrome\\bitwarden plugin.png");
+        Image bitwardenIsOpen = loadImageAutomationStep.loadImage("chrome\\bitwarden open.png");
 
         ImageOnScreen chromeBitwardenOnScreen = findImageOnScreen.findImageOnScreen(bitwardenPlugin);
 
         ScreenLocation chromeBitwardenScreenLocation = chromeBitwardenOnScreen.screenLocation();
-        sendMouseClickCommand.sendMouseClick(chromeBitwardenScreenLocation.withOffset(bitwardenPlugin.center()));
+        sendMouseClickAutomationStep.sendMouseClick(chromeBitwardenScreenLocation.withOffset(bitwardenPlugin.center()));
 
         findImageOnScreen.findImageOnScreen(bitwardenIsOpen);
 
         typeCharsAutomationStep.typeChars(passwordManagerPassword);
         typeCharsAutomationStep.typeChars("\n");
 
-        sendMouseClickCommand.sendMouseClick(chromeBitwardenScreenLocation.withOffset(bitwardenPlugin.center()));
+        sendMouseClickAutomationStep.sendMouseClick(chromeBitwardenScreenLocation.withOffset(bitwardenPlugin.center()));
     }
 }

@@ -95,6 +95,19 @@ interface CommandLineModule {
     }
 
     @Provides
+    @IntoSet
+    static CommandLineArg<?> record(Params params) {
+        Option option = Option.builder()
+            .longOpt("record")
+            .desc("Record automation flow to the file. Default: " + params.record())
+            .build();
+        return ImmutableCommandLineArgNoValue.<Boolean>builder()
+            .option(option)
+            .setter(builder -> builder::record)
+            .build();
+    }
+
+    @Provides
     static Set<Option> optionsSet(Set<CommandLineArg<?>> commandLineArgs) {
         return commandLineArgs.stream()
             .map(CommandLineArg::option)

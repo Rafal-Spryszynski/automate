@@ -12,6 +12,7 @@ import pl.allegro.automate.adapter.system.flow.SystemFlowModule;
 import pl.allegro.automate.adapter.system.process.SystemModule;
 import pl.allegro.automate.flow.FlowModule;
 import pl.allegro.automate.gui.GuiModule;
+import pl.allegro.automate.record.AutomationRecorder;
 
 import java.nio.file.Path;
 import java.time.Duration;
@@ -34,6 +35,8 @@ interface AutomateComponent {
     AutomationFlowFileReader automationFlowFileReader();
 
     Automate automate();
+
+    AutomationRecorder automationRecorder();
 
     @Component.Builder
     interface Builder {

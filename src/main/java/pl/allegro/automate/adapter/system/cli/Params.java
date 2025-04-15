@@ -34,4 +34,9 @@ public interface Params {
     default Duration defaultSleepDuration() {
         return Duration.ofMillis(200);
     }
+
+    @Default
+    default boolean record() {
+        return false;
+    }
 }

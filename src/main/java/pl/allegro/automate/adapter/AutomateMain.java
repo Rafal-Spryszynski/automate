@@ -8,6 +8,7 @@ import pl.allegro.automate.adapter.flow.file.reader.AutomationFlowFileReader;
 import pl.allegro.automate.adapter.system.cli.ArgsParser;
 import pl.allegro.automate.adapter.system.cli.DaggerCommandLineComponent;
 import pl.allegro.automate.adapter.system.cli.Params;
+import pl.allegro.automate.record.AutomationRecorder;
 
 class AutomateMain {
 
@@ -31,6 +32,12 @@ class AutomateMain {
             .defaultSleepDuration(params.defaultSleepDuration())
             .filesPath(params.filesPath())
             .build();
+
+        if (params.record()) {
+            AutomationRecorder automationRecorder = automateComponent.automationRecorder();
+            automationRecorder.recordAutomation();
+            return;
+        }
         AutomationFlowFileReader automationFlowFileReader = automateComponent.automationFlowFileReader();
         AutomationFlow automationFlow = automationFlowFileReader.readAutomationFlow();
         Automate automate = automateComponent.automate();

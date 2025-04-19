@@ -1,8 +1,8 @@
 package pl.allegro.automate.record;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.vavr.control.Try;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.function.Failable;
 import pl.allegro.automate.AutomationFlow;
 import pl.allegro.automate.AutomationFlow.Step.Arg;
 import pl.allegro.automate.AutomationFlow.Step.Code;
@@ -74,10 +74,11 @@ public class AutomationRecorder {
     private void writeToFile() {
         Path newFlowPath = filesPath.resolve("new-automation-flow.json");
         printf("Saving to %s and quitting...\n", newFlowPath);
-        AutomationFlow automationFlow = ImmutableAutomationFlow.builder()
-            .steps(stepsList)
-            .build();
-        Try.run(() -> objectMapper.writeValue(newFlowPath.toFile(), automationFlow));
+        AutomationFlow automationFlow =
+            ImmutableAutomationFlow.builder()
+                .steps(stepsList)
+                .build();
+        Failable.run(() -> objectMapper.writeValue(newFlowPath.toFile(), automationFlow));
     }
 
     private static String quitWithoutSaving(String command) {
@@ -109,8 +110,20 @@ public class AutomationRecorder {
         stepsList.add(step);
     }
 
-    private static void recordTypingChars(String command) {
+    private void recordTypingChars(String command) {
         String chars = substringAfter(command, TYPE_CHARS + " ");
         printf("Recording typing chars: %s\n", chars);
+
+        AutomationFlow.Step step =
+            ImmutableStep.builder()
+                .code(Code.TYPE_CHARS)
+                .addArgs(
+                    ImmutableArg.builder()
+                        .type(Arg.Type.CONST)
+                        .value(chars)
+                        .build()
+                )
+                .build();
+        stepsList.add(step);
     }
 }

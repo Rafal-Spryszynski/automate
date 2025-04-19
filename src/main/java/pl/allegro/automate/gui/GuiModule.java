@@ -25,4 +25,9 @@ public interface GuiModule {
     @AutomationStepEnumKey(AutomationFlow.Step.Code.MOUSE_CLICK)
     @IntoMap
     AutomationStep bindSendMouseClickAutomationStep(SendMouseClickAutomationStep automationStep);
+
+    @Binds
+    @AutomationStepEnumKey(AutomationFlow.Step.Code.TYPE_CHARS)
+    @IntoMap
+    AutomationStep bindTypeCharsAutomationStep(TypeCharsAutomationStep automationStep);
 }

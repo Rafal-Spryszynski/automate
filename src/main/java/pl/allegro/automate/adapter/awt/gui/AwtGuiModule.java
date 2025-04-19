@@ -46,9 +46,12 @@ interface AwtGuiModule {
     AutomationStep bindSendMouseClickStep(SendDeviceMouseClickAutomationStep automationStep);
 
     @Binds
+    TypeCharsAutomationStep bindTypeCharsAutomationStep(TypeKeyboardCharsAutomationStep automationStep);
+
+    @Binds
     @AutomationStepKey(TypeCharsAutomationStep.class)
     @IntoMap
-    AutomationStep typeCharsAutomationStep(TypeKeyboardCharsAutomationStep automationStep);
+    AutomationStep bindTypeCharsStep(TypeKeyboardCharsAutomationStep automationStep);
 
     @Provides
     static Robot robot(Duration autoDelay) {

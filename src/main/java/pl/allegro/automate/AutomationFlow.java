@@ -25,7 +25,8 @@ public interface AutomationFlow {
 
         enum Code {
             MOUSE_CLICK,
-            START_PROCESS
+            START_PROCESS,
+            TYPE_CHARS,
         }
 
         @JsonDeserialize(as = ImmutableArg.class)

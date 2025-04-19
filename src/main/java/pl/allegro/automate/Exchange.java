@@ -4,13 +4,19 @@ import io.vavr.control.Option;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 public class Exchange {
 
     private final List<Object> inputs = new LinkedList<>();
+    private Optional<String> label = Optional.empty();
 
     void addInput(Object value) {
         inputs.add(value);
+    }
+
+    void setLabel(Optional<String> label) {
+        this.label = label;
     }
 
     public void expectNoParams() {
@@ -50,6 +56,10 @@ public class Exchange {
 
     @Override
     public String toString() {
-        return inputs.toString();
+        String inputsString =
+            label.map(value -> inputs + " - " + value)
+                .orElseGet(inputs::toString);
+        label = Optional.empty();
+        return inputsString;
     }
 }

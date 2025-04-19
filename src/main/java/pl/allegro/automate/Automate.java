@@ -23,6 +23,7 @@ public class Automate {
                             exchange.addInput(arg.value());
                     }
                 });
+                exchange.setLabel(step.label());
                 automationStep.execute(exchange);
             });
     }

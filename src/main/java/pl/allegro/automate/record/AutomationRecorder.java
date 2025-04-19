@@ -17,11 +17,14 @@ import java.awt.Point;
 import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static io.vavr.API.printf;
 import static io.vavr.API.println;
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.equalsAny;
 import static org.apache.commons.lang3.StringUtils.startsWith;
+import static org.apache.commons.lang3.StringUtils.stripToNull;
 import static org.apache.commons.lang3.StringUtils.substringAfter;
 
 public class AutomationRecorder {
@@ -45,7 +48,7 @@ public class AutomationRecorder {
         String command;
         do {
             println("Select step:");
-            printf(" [%s] - move mouse to current position and click\n", MOUSE_CLICK);
+            printf(" [%s] [label?] - move mouse to current position and click\n", MOUSE_CLICK);
             printf(" [%s] [chars] - type chars\n", TYPE_CHARS);
             printf(" [%s] - save & quit\n", WRITE_QUIT);
             printf(" [%s] - quit without saving\n", QUIT);
@@ -59,7 +62,7 @@ public class AutomationRecorder {
                 command = quitWithoutSaving(command);
 
             } else if (startsWith(command, MOUSE_CLICK)) {
-                recordMovingMouseAndClicking();
+                recordMovingMouseAndClicking(command);
 
             } else if (startsWith(command, TYPE_CHARS)) {
                 recordTypingChars(command);
@@ -93,9 +96,15 @@ public class AutomationRecorder {
         return command;
     }
 
-    private void recordMovingMouseAndClicking() {
+    private void recordMovingMouseAndClicking(String command) {
+        Optional<String> label =
+            Optional.ofNullable(
+                stripToNull(substringAfter(command, MOUSE_CLICK + " "))
+            );
+        String labelLog = label.map(" with label: "::concat).orElse(EMPTY);
+
         Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
-        printf("Recording moving mouse and clicking at: %s\n", mouseLocation);
+        printf("Recording moving mouse and clicking at: %s%s\n", mouseLocation, labelLog);
 
         AutomationFlow.Step step =
             ImmutableStep.builder()
@@ -106,6 +115,7 @@ public class AutomationRecorder {
                         .value(ImmutableScreenLocation.of(mouseLocation.y, mouseLocation.x))
                         .build()
                 )
+                .label(label)
                 .build();
         stepsList.add(step);
     }

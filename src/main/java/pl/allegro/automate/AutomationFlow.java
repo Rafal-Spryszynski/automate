@@ -1,5 +1,6 @@
 package pl.allegro.automate;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
@@ -8,6 +9,9 @@ import org.immutables.value.Value;
 import pl.allegro.automate.gui.ImmutableScreenLocation;
 
 import java.util.List;
+import java.util.Optional;
+
+import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_ABSENT;
 
 @JsonDeserialize(as = ImmutableAutomationFlow.class)
 @Value.Immutable
@@ -22,6 +26,9 @@ public interface AutomationFlow {
         Code code();
 
         List<Arg> args();
+
+        @JsonInclude(NON_ABSENT)
+        Optional<String> label();
 
         enum Code {
             MOUSE_CLICK,

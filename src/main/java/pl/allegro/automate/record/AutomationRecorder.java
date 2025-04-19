@@ -33,6 +33,7 @@ public class AutomationRecorder {
     private static final String QUIT = "q";
     private static final String MOUSE_CLICK = "m";
     private static final String TYPE_CHARS = "t";
+    private static final String LABEL = "l";
 
     private final Path filesPath;
     private final ObjectMapper objectMapper;
@@ -50,6 +51,7 @@ public class AutomationRecorder {
             println("Select step:");
             printf(" [%s] [label?] - move mouse to current position and click\n", MOUSE_CLICK);
             printf(" [%s] [chars] - type chars\n", TYPE_CHARS);
+            printf(" [%s] [label?] - set label on previous step\n", LABEL);
             printf(" [%s] - save & quit\n", WRITE_QUIT);
             printf(" [%s] - quit without saving\n", QUIT);
 
@@ -66,6 +68,9 @@ public class AutomationRecorder {
 
             } else if (startsWith(command, TYPE_CHARS)) {
                 recordTypingChars(command);
+
+            } else if (startsWith(command, LABEL)) {
+                setLabelOnPreviousStep(command);
 
             } else {
                 println("Unknown command: " + command);
@@ -97,10 +102,7 @@ public class AutomationRecorder {
     }
 
     private void recordMovingMouseAndClicking(String command) {
-        Optional<String> label =
-            Optional.ofNullable(
-                stripToNull(substringAfter(command, MOUSE_CLICK + " "))
-            );
+        Optional<String> label = getLabel(command, MOUSE_CLICK);
         String labelLog = label.map(" with label: "::concat).orElse(EMPTY);
 
         Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
@@ -135,5 +137,32 @@ public class AutomationRecorder {
                 )
                 .build();
         stepsList.add(step);
+    }
+
+    private void setLabelOnPreviousStep(String command) {
+        Optional<String> label = getLabel(command, LABEL);
+
+        if (label.isEmpty()) {
+            println("Ignoring blank label");
+            return;
+        }
+        if (stepsList.isEmpty()) {
+            println("Steps list is empty. Cannot set label.");
+            return;
+        }
+        AutomationFlow.Step step = stepsList.remove(stepsList.size() - 1);
+        printf("Setting label [%s] on the last step %s\n", label.get(), step);
+        AutomationFlow.Step stepWithLabel =
+            ImmutableStep.builder()
+                .from(step)
+                .label(label)
+                .build();
+        stepsList.add(stepWithLabel);
+    }
+
+    private static Optional<String> getLabel(String command, String commandCode) {
+        return Optional.ofNullable(
+            stripToNull(substringAfter(command, commandCode + " "))
+        );
     }
 }

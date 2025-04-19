@@ -9,7 +9,7 @@ public class Exchange {
 
     private final List<Object> inputs = new LinkedList<>();
 
-    void addInput(String value) {
+    void addInput(Object value) {
         inputs.add(value);
     }
 

@@ -1,7 +1,11 @@
 package pl.allegro.automate;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.immutables.value.Value;
+import pl.allegro.automate.gui.ImmutableScreenLocation;
 
 import java.util.List;
 
@@ -20,6 +24,7 @@ public interface AutomationFlow {
         List<Arg> args();
 
         enum Code {
+            MOUSE_CLICK,
             START_PROCESS
         }
 
@@ -29,7 +34,15 @@ public interface AutomationFlow {
 
             Type type();
 
-            String value();
+            @JsonTypeInfo(
+                use = Id.NAME,
+                property = "type",
+                defaultImpl = String.class
+            )
+            @JsonSubTypes({
+                @JsonSubTypes.Type(value = ImmutableScreenLocation.class, name = "location")
+            })
+            Object value();
 
             enum Type {
                 CONST

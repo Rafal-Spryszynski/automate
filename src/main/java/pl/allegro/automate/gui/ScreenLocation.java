@@ -1,8 +1,10 @@
 package pl.allegro.automate.gui;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.immutables.value.Value;
 import org.immutables.value.Value.Parameter;
 
+@JsonDeserialize(as = ImmutableScreenLocation.class)
 @Value.Immutable
 public interface ScreenLocation {
 

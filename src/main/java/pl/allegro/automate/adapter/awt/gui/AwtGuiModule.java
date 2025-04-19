@@ -38,9 +38,12 @@ interface AwtGuiModule {
     AutomationStep bindTakeScreenCaptureStep(TakeDeviceScreenCaptureAutomationStep automationStep);
 
     @Binds
+    SendMouseClickAutomationStep bindSendMouseClickAutomationStep(SendDeviceMouseClickAutomationStep automationStep);
+
+    @Binds
     @AutomationStepKey(SendMouseClickAutomationStep.class)
     @IntoMap
-    AutomationStep bindSendMouseClickAutomationStep(SendDeviceMouseClickAutomationStep automationStep);
+    AutomationStep bindSendMouseClickStep(SendDeviceMouseClickAutomationStep automationStep);
 
     @Binds
     @AutomationStepKey(TypeCharsAutomationStep.class)

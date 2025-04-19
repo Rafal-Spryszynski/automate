@@ -80,6 +80,10 @@ public class AutomationRecorder {
     }
 
     private void writeToFile() {
+        if (stepsList.isEmpty()) {
+            println("Steps list is empty. Doing nothing.");
+            return;
+        }
         Path newFlowPath = filesPath.resolve("new-automation-flow.json");
         printf("Saving to %s and quitting...\n", newFlowPath);
         AutomationFlow automationFlow =

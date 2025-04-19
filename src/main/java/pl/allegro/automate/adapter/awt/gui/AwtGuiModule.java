@@ -5,7 +5,9 @@ import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import io.vavr.control.Try;
+import pl.allegro.automate.AutomationFlow;
 import pl.allegro.automate.AutomationStep;
+import pl.allegro.automate.AutomationStepEnumKey;
 import pl.allegro.automate.AutomationStepKey;
 import pl.allegro.automate.gui.GuiAutomationSteps;
 import pl.allegro.automate.gui.LoadImageAutomationStep;
@@ -25,6 +27,10 @@ interface AwtGuiModule {
     Map<Class<? extends AutomationStep>, AutomationStep> guiAutomationSteps(Map<Class<? extends AutomationStep>, AutomationStep> guiAutomationSteps);
 
     @Binds
+    @GuiAutomationSteps
+    Map<AutomationFlow.Step.Code, AutomationStep> guiAutomationStepsByCode(Map<AutomationFlow.Step.Code, AutomationStep> guiAutomationSteps);
+
+    @Binds
     @AutomationStepKey(LoadImageAutomationStep.class)
     @IntoMap
     AutomationStep bindLoadImageAutomationStep(LoadImageFromDiskAutomationStep automationStep);
@@ -38,20 +44,24 @@ interface AwtGuiModule {
     AutomationStep bindTakeScreenCaptureStep(TakeDeviceScreenCaptureAutomationStep automationStep);
 
     @Binds
-    SendMouseClickAutomationStep bindSendMouseClickAutomationStep(SendDeviceMouseClickAutomationStep automationStep);
-
-    @Binds
     @AutomationStepKey(SendMouseClickAutomationStep.class)
     @IntoMap
     AutomationStep bindSendMouseClickStep(SendDeviceMouseClickAutomationStep automationStep);
 
     @Binds
-    TypeCharsAutomationStep bindTypeCharsAutomationStep(TypeKeyboardCharsAutomationStep automationStep);
+    @AutomationStepEnumKey(AutomationFlow.Step.Code.MOUSE_CLICK)
+    @IntoMap
+    AutomationStep bindSendMouseClickAutomationStep(SendDeviceMouseClickAutomationStep automationStep);
 
     @Binds
     @AutomationStepKey(TypeCharsAutomationStep.class)
     @IntoMap
     AutomationStep bindTypeCharsStep(TypeKeyboardCharsAutomationStep automationStep);
+
+    @Binds
+    @AutomationStepEnumKey(AutomationFlow.Step.Code.TYPE_CHARS)
+    @IntoMap
+    AutomationStep bindTypeCharsAutomationStep(TypeKeyboardCharsAutomationStep automationStep);
 
     @Provides
     static Robot robot(Duration autoDelay) {

@@ -17,7 +17,8 @@ interface AutomateModule {
     @Provides
     static Map<Class<? extends AutomationStep>, AutomationStep> provideAllAutomationSteps(
         java.util.Map<Class<? extends AutomationStep>, AutomationStep> automationSteps,
-        @GuiAutomationSteps java.util.Map<Class<? extends AutomationStep>, AutomationStep> guiAutomationSteps,
+        @GuiAutomationSteps
+        java.util.Map<Class<? extends AutomationStep>, AutomationStep> guiAutomationSteps,
         LoggingAutomationStepFactory loggingAutomationStepFactory
     ) {
         var allAutomationSteps = new java.util.HashMap<>(automationSteps);
@@ -31,9 +32,13 @@ interface AutomateModule {
     @Provides
     static Map<AutomationFlow.Step.Code, AutomationStep> allAutomationSteps(
         java.util.Map<AutomationFlow.Step.Code, AutomationStep> automationSteps,
+        @GuiAutomationSteps
+        java.util.Map<AutomationFlow.Step.Code, AutomationStep> guiAutomationSteps,
         LoggingAutomationStepFactory loggingAutomationStepFactory
     ) {
-        return HashMap.ofAll(automationSteps)
+        var allAutomationSteps = new java.util.HashMap<>(automationSteps);
+        allAutomationSteps.putAll(guiAutomationSteps);
+        return HashMap.ofAll(allAutomationSteps)
             .map((code, automationStep) ->
                 decorateWithLogging(loggingAutomationStepFactory, AutomationStep.class, automationStep)
                     .map1(aClass -> code)

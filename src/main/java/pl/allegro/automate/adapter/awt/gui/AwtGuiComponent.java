@@ -2,13 +2,12 @@ package pl.allegro.automate.adapter.awt.gui;
 
 import dagger.BindsInstance;
 import dagger.Component;
+import pl.allegro.automate.AutomationFlow;
 import pl.allegro.automate.AutomationStep;
 import pl.allegro.automate.adapter.logging.metrics.LoggingMetricsModule;
 import pl.allegro.automate.adapter.system.time.SystemTimeModule;
 import pl.allegro.automate.gui.GuiAutomationSteps;
-import pl.allegro.automate.gui.SendMouseClickAutomationStep;
 import pl.allegro.automate.gui.TakeScreenCaptureAutomationStep;
-import pl.allegro.automate.gui.TypeCharsAutomationStep;
 
 import java.nio.file.Path;
 import java.time.Duration;
@@ -23,12 +22,11 @@ public interface AwtGuiComponent {
 
     TakeScreenCaptureAutomationStep takeScreenCaptureAutomationStep();
 
-    SendMouseClickAutomationStep sendMouseClickAutomationStep();
-
-    TypeCharsAutomationStep typeCharsAutomationStep();
-
     @GuiAutomationSteps
     Map<Class<? extends AutomationStep>, AutomationStep> automationSteps();
+
+    @GuiAutomationSteps
+    Map<AutomationFlow.Step.Code, AutomationStep> automationStepsByCode();
 
     @Component.Builder
     interface Builder {

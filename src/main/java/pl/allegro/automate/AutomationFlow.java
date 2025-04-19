@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.immutables.value.Value;
 import pl.allegro.automate.gui.ImmutableScreenLocation;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,13 +35,17 @@ public interface AutomationFlow {
             MOUSE_CLICK,
             START_PROCESS,
             TYPE_CHARS,
+            SLEEP,
         }
 
         @JsonDeserialize(as = ImmutableArg.class)
         @Value.Immutable
         interface Arg {
 
-            Type type();
+            @Value.Default
+            default Type type() {
+                return Type.CONST;
+            }
 
             @JsonTypeInfo(
                 use = Id.NAME,
@@ -48,8 +53,10 @@ public interface AutomationFlow {
                 defaultImpl = String.class
             )
             @JsonSubTypes({
-                @JsonSubTypes.Type(value = ImmutableScreenLocation.class, name = "location")
+                @JsonSubTypes.Type(value = ImmutableScreenLocation.class, name = "location"),
+                @JsonSubTypes.Type(value = Duration.class, name = "duration"),
             })
+            @Value.Parameter
             Object value();
 
             enum Type {

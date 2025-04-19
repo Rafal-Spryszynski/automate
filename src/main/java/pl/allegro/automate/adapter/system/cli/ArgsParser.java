@@ -68,6 +68,6 @@ public class ArgsParser {
 
     public void displayHelp() {
         HelpFormatter helpFormatter = new HelpFormatter();
-        helpFormatter.printHelp("java -jar target/automate-1.0-SNAPSHOT.jar", options);
+        helpFormatter.printHelp("java -jar automate-1.0-SNAPSHOT.jar", options);
     }
 }

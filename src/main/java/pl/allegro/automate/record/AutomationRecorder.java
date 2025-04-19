@@ -1,10 +1,10 @@
 package pl.allegro.automate.record;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.vavr.control.Try;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.function.Failable;
 import pl.allegro.automate.AutomationFlow;
-import pl.allegro.automate.AutomationFlow.Step.Arg;
 import pl.allegro.automate.AutomationFlow.Step.Code;
 import pl.allegro.automate.ImmutableArg;
 import pl.allegro.automate.ImmutableAutomationFlow;
@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,9 @@ import static io.vavr.API.printf;
 import static io.vavr.API.println;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.apache.commons.lang3.StringUtils.equalsAny;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.startsWith;
+import static org.apache.commons.lang3.StringUtils.strip;
 import static org.apache.commons.lang3.StringUtils.stripToNull;
 import static org.apache.commons.lang3.StringUtils.substringAfter;
 
@@ -34,6 +37,7 @@ public class AutomationRecorder {
     private static final String MOUSE_CLICK = "m";
     private static final String TYPE_CHARS = "t";
     private static final String LABEL = "l";
+    private static final String SLEEP = "s";
 
     private final Path filesPath;
     private final ObjectMapper objectMapper;
@@ -51,6 +55,7 @@ public class AutomationRecorder {
             println("Select step:");
             printf(" [%s] [label?] - move mouse to current position and click\n", MOUSE_CLICK);
             printf(" [%s] [chars] - type chars\n", TYPE_CHARS);
+            printf(" [%s] [duration] - sleep (PT3s)\n", SLEEP);
             printf(" [%s] [label?] - set label on previous step\n", LABEL);
             printf(" [%s] - save & quit\n", WRITE_QUIT);
             printf(" [%s] - quit without saving\n", QUIT);
@@ -68,6 +73,9 @@ public class AutomationRecorder {
 
             } else if (startsWith(command, TYPE_CHARS)) {
                 recordTypingChars(command);
+
+            } else if (startsWith(command, SLEEP)) {
+                recordSleeping(command);
 
             } else if (startsWith(command, LABEL)) {
                 setLabelOnPreviousStep(command);
@@ -116,10 +124,7 @@ public class AutomationRecorder {
             ImmutableStep.builder()
                 .code(Code.MOUSE_CLICK)
                 .addArgs(
-                    ImmutableArg.builder()
-                        .type(Arg.Type.CONST)
-                        .value(ImmutableScreenLocation.of(mouseLocation.y, mouseLocation.x))
-                        .build()
+                    ImmutableArg.of(ImmutableScreenLocation.of(mouseLocation.y, mouseLocation.x))
                 )
                 .label(label)
                 .build();
@@ -133,12 +138,30 @@ public class AutomationRecorder {
         AutomationFlow.Step step =
             ImmutableStep.builder()
                 .code(Code.TYPE_CHARS)
-                .addArgs(
-                    ImmutableArg.builder()
-                        .type(Arg.Type.CONST)
-                        .value(chars)
-                        .build()
-                )
+                .addArgs(ImmutableArg.of(chars))
+                .build();
+        stepsList.add(step);
+    }
+
+    private void recordSleeping(String command) {
+        String durationString = strip(substringAfter(command, SLEEP + " "));
+
+        if (isBlank(durationString)) {
+            println("Ignoring blank duration.");
+            return;
+        }
+        Try<Duration> durationTry = Try.of(() -> Duration.parse(durationString));
+
+        if (durationTry.isFailure()) {
+            durationTry.onFailure(e -> printf("%s - [%s]\n", e, durationString));
+            return;
+        }
+        Duration duration = durationTry.get();
+        printf("Recording sleeping: %s\n", duration);
+        AutomationFlow.Step step =
+            ImmutableStep.builder()
+                .code(Code.SLEEP)
+                .addArgs(ImmutableArg.of(duration))
                 .build();
         stepsList.add(step);
     }

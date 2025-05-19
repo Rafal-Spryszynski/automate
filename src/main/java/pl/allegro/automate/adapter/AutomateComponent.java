@@ -49,6 +49,9 @@ interface AutomateComponent {
         @BindsInstance
         Builder filesPath(Path filesPath);
 
+        @BindsInstance
+        Builder automationFileName(String automationFileName);
+
         AutomateComponent build();
     }
 }

@@ -21,6 +21,11 @@ public interface Params {
     }
 
     @Default
+    default String automationFileName() {
+        return "automation-flow.json";
+    }
+
+    @Default
     default boolean saveScreenCaptures() {
         return false;
     }

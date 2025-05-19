@@ -53,6 +53,21 @@ interface CommandLineModule {
 
     @Provides
     @IntoSet
+    static CommandLineArg<?> automationFileName(Params params) {
+        Option option = Option.builder()
+            .longOpt("automationFileName")
+            .hasArg()
+            .desc("Automation file name. Default: " + params.automationFileName())
+            .build();
+        return ImmutableCommandLineArgWithValue.<String>builder()
+            .option(option)
+            .mapper(string -> string)
+            .setter(builder -> builder::automationFileName)
+            .build();
+    }
+
+    @Provides
+    @IntoSet
     static CommandLineArg<?> saveScreenCaptures(Params params) {
         Option option = Option.builder()
             .longOpt("saveScreenCaptures")

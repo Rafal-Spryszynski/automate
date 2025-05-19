@@ -31,6 +31,7 @@ class AutomateMain {
             .awtGuiComponent(awtGuiComponent)
             .defaultSleepDuration(params.defaultSleepDuration())
             .filesPath(params.filesPath())
+            .automationFileName(params.automationFileName())
             .build();
 
         if (params.record()) {

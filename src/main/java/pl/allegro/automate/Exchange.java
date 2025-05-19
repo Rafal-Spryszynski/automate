@@ -56,10 +56,7 @@ public class Exchange {
 
     @Override
     public String toString() {
-        String inputsString =
-            label.map(value -> inputs + " - " + value)
-                .orElseGet(inputs::toString);
-        label = Optional.empty();
-        return inputsString;
+        return label.map(value -> inputs + " - " + value)
+            .orElseGet(inputs::toString);
     }
 }
